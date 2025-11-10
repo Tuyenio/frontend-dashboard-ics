@@ -3,10 +3,11 @@ import HeroSection from '@/components/landing/HeroSection';
 import ServicesSection from '@/components/landing/ServicesSection';
 import AboutContactSection from '@/components/landing/AboutContactSection';
 import Footer from '@/components/landing/Footer';
+import ScrollToTop from '@/components/common/ScrollToTop';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen">
       <Navigation />
       <main>
         <section id="hero">
@@ -22,6 +23,7 @@ export default function Home() {
       <section id="contact">
         <Footer />
       </section>
+      <ScrollToTop />
     </div>
   );
 }

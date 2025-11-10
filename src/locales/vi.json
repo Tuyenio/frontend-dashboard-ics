@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Trang chủ",
+    "services": "Dịch vụ",
+    "about": "Về chúng tôi",
+    "contact": "Liên hệ",
+    "login": "Đăng nhập"
+  },
+  "hero": {
+    "title": "CÔNG TY CỔ PHẦN AN NINH MẠNG QUỐC TẾ",
+    "subtitle": "Dashboard Thông Minh - Quản Lý Hiệu Quả",
+    "description": "Giải pháp dashboard chuyên nghiệp giúp doanh nghiệp của bạn giám sát, phân tích và đưa ra quyết định nhanh chóng trong lĩnh vực Sale, Marketing, Y tế, Quản lý nhân sự và nhiều hơn nữa.",
+    "cta": {
+      "primary": "Dùng thử miễn phí",
+      "secondary": "Xem demo"
+    },
+    "stats": {
+      "clients": "Khách hàng",
+      "uptime": "Uptime",
+      "support": "Hỗ trợ 24/7"
+    }
+  },
+  "services": {
+    "title": "Dashboard Chuyên Nghiệp",
+    "subtitle": "Giải pháp toàn diện cho mọi lĩnh vực kinh doanh",
+    "sales": {
+      "title": "Dashboard Sale",
+      "desc": "Theo dõi doanh số, KPI, pipeline và hiệu suất bán hàng real-time"
+    },
+    "marketing": {
+      "title": "Dashboard Marketing",
+      "desc": "Phân tích chiến dịch, ROI, conversion và customer journey"
+    },
+    "healthcare": {
+      "title": "Dashboard Y tế",
+      "desc": "Quản lý bệnh nhân, lịch hẹn, và chỉ số sức khỏe"
+    },
+    "hr": {
+      "title": "Quản lý Nhân sự",
+      "desc": "Theo dõi nhân viên, chấm công, đánh giá hiệu suất"
+    },
+    "finance": {
+      "title": "Dashboard Tài chính",
+      "desc": "Giám sát dòng tiền, báo cáo tài chính, và chi phí"
+    },
+    "logistics": {
+      "title": "Logistics & Vận chuyển",
+      "desc": "Theo dõi đơn hàng, tồn kho và chuỗi cung ứng"
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "desc": "Phân tích bán hàng online, khách hàng và xu hướng"
+    },
+    "analytics": {
+      "title": "Data Analytics",
+      "desc": "Phân tích dữ liệu sâu với AI và machine learning"
+    }
+  },
+  "about": {
+    "title": "Về ICS Dashboard",
+    "subtitle": "Đối tác tin cậy cho chuyển đổi số của doanh nghiệp",
+    "realtime": "Dữ liệu Real-time",
+    "realtime_desc": "Cập nhật dữ liệu theo thời gian thực",
+    "secure": "Bảo mật Cao",
+    "secure_desc": "Mã hóa end-to-end và tuân thủ chuẩn quốc tế",
+    "customizable": "Tùy biến Linh hoạt",
+    "customizable_desc": "Cấu hình dashboard theo nhu cầu riêng",
+    "support": "Hỗ trợ 24/7",
+    "support_desc": "Đội ngũ kỹ thuật sẵn sàng hỗ trợ mọi lúc",
+    "cta": "Bắt đầu ngay",
+    "video_title": "Xem Dashboard hoạt động",
+    "video_subtitle": "Trải nghiệm giao diện trực quan và mượt mà"
+  },
+  "contact": {
+    "title": "Thông tin liên hệ",
+    "address": "TT3-5 Đại Kim, Định Công, Hoàng Mai, Hà Nội",
+    "phone1": "0931.487.231",
+    "phone2": "0707.806.860",
+    "email": "info@icss.com.vn",
+    "website": "www.icss.com.vn"
+  },
+  "footer": {
+    "description": "Đối tác tin cậy bảo vệ doanh nghiệp của bạn trong thế giới số.",
+    "services": "Dịch vụ",
+    "company": "Công ty",
+    "support": "Hỗ trợ",
+    "consulting": "Tư vấn An ninh",
+    "monitoring": "Giám sát 24/7",
+    "encryption": "Mã hóa dữ liệu",
+    "protection": "Bảo vệ dữ liệu",
+    "about": "Về chúng tôi",
+    "team": "Đội ngũ",
+    "news": "Tin tức",
+    "careers": "Tuyển dụng",
+    "docs": "Tài liệu",
+    "faqs": "FAQs",
+    "contact": "Liên hệ",
+    "helpCenter": "Trung tâm hỗ trợ",
+    "privacy": "Chính sách bảo mật",
+    "terms": "Điều khoản sử dụng",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "scrollToTop": "Lên đầu trang",
+    "loading": "Đang tải...",
+    "error": "Có lỗi xảy ra"
+  }
+}

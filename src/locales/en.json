@@ -1,0 +1,108 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login"
+  },
+  "hero": {
+    "title": "INTERNATIONAL CYBERSECURITY SOLUTIONS",
+    "subtitle": "Smart Dashboard - Efficient Management",
+    "description": "Professional dashboard solutions help your business monitor, analyze and make quick decisions in Sales, Marketing, Healthcare, HR management and more.",
+    "cta": {
+      "primary": "Start Free Trial",
+      "secondary": "View Demo"
+    },
+    "stats": {
+      "clients": "Clients",
+      "uptime": "Uptime",
+      "support": "24/7 Support"
+    }
+  },
+  "services": {
+    "title": "Professional Dashboards",
+    "subtitle": "Complete solutions for all business sectors",
+    "sales": {
+      "title": "Sales Dashboard",
+      "desc": "Track revenue, KPIs, pipeline and real-time sales performance"
+    },
+    "marketing": {
+      "title": "Marketing Dashboard",
+      "desc": "Analyze campaigns, ROI, conversion and customer journey"
+    },
+    "healthcare": {
+      "title": "Healthcare Dashboard",
+      "desc": "Manage patients, appointments, and health metrics"
+    },
+    "hr": {
+      "title": "HR Management",
+      "desc": "Track employees, attendance, and performance reviews"
+    },
+    "finance": {
+      "title": "Financial Dashboard",
+      "desc": "Monitor cash flow, financial reports, and expenses"
+    },
+    "logistics": {
+      "title": "Logistics & Shipping",
+      "desc": "Track orders, inventory and supply chain"
+    },
+    "ecommerce": {
+      "title": "E-commerce",
+      "desc": "Analyze online sales, customers and trends"
+    },
+    "analytics": {
+      "title": "Data Analytics",
+      "desc": "Deep data analysis with AI and machine learning"
+    }
+  },
+  "about": {
+    "title": "About ICS Dashboard",
+    "subtitle": "Trusted partner for your digital transformation",
+    "realtime": "Real-time Data",
+    "realtime_desc": "Real-time data updates",
+    "secure": "High Security",
+    "secure_desc": "End-to-end encryption and international compliance",
+    "customizable": "Flexible Customization",
+    "customizable_desc": "Configure dashboards to your needs",
+    "support": "24/7 Support",
+    "support_desc": "Technical team ready to help anytime",
+    "cta": "Get Started",
+    "video_title": "See Dashboard in Action",
+    "video_subtitle": "Experience intuitive and smooth interface"
+  },
+  "contact": {
+    "title": "Contact Information",
+    "address": "TT3-5 Dai Kim, Dinh Cong, Hoang Mai, Hanoi",
+    "phone1": "0931.487.231",
+    "phone2": "0707.806.860",
+    "email": "info@icss.com.vn",
+    "website": "www.icss.com.vn"
+  },
+  "footer": {
+    "description": "Trusted partner protecting your business in the digital world.",
+    "services": "Services",
+    "company": "Company",
+    "support": "Support",
+    "consulting": "Security Consulting",
+    "monitoring": "24/7 Monitoring",
+    "encryption": "Data Encryption",
+    "protection": "Data Protection",
+    "about": "About Us",
+    "team": "Team",
+    "news": "News",
+    "careers": "Careers",
+    "docs": "Documentation",
+    "faqs": "FAQs",
+    "contact": "Contact",
+    "helpCenter": "Help Center",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "scrollToTop": "Back to top",
+    "loading": "Loading...",
+    "error": "An error occurred"
+  }
+}

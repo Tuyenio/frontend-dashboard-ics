@@ -1,38 +1,55 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Shield, Facebook, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { BarChart3, Facebook, Linkedin, Twitter, Youtube } from 'lucide-react';
+import Image from 'next/image';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function Footer() {
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   const footerLinks = [
     {
-      title: 'Dịch vụ',
-      links: ['Tư vấn An ninh', 'Giám sát 24/7', 'Mã hóa dữ liệu', 'Bảo vệ dữ liệu'],
+      title: t('footer.services'),
+      links: [
+        { label: t('footer.consulting'), href: '#' },
+        { label: t('footer.monitoring'), href: '#' },
+        { label: t('footer.encryption'), href: '#' },
+        { label: t('footer.protection'), href: '#' },
+      ],
     },
     {
-      title: 'Công ty',
-      links: ['Về chúng tôi', 'Đội ngũ', 'Tin tức', 'Tuyển dụng'],
+      title: t('footer.company'),
+      links: [
+        { label: t('footer.about'), href: '#' },
+        { label: t('footer.team'), href: '#' },
+        { label: t('footer.news'), href: '#' },
+        { label: t('footer.careers'), href: '#' },
+      ],
     },
     {
-      title: 'Hỗ trợ',
-      links: ['Tài liệu', 'FAQs', 'Liên hệ', 'Trung tâm hỗ trợ'],
+      title: t('footer.support'),
+      links: [
+        { label: t('footer.docs'), href: '#' },
+        { label: t('footer.faqs'), href: '#' },
+        { label: t('footer.contact'), href: '#' },
+        { label: t('footer.helpCenter'), href: '#' },
+      ],
     },
   ];
 
   const socialLinks = [
-    { icon: Facebook, href: '#', label: 'Facebook' },
-    { icon: Linkedin, href: '#', label: 'LinkedIn' },
-    { icon: Twitter, href: '#', label: 'Twitter' },
-    { icon: Youtube, href: '#', label: 'YouTube' },
+    { icon: Facebook, href: '#', label: 'Facebook', color: 'hover:bg-blue-600' },
+    { icon: Linkedin, href: '#', label: 'LinkedIn', color: 'hover:bg-blue-700' },
+    { icon: Twitter, href: '#', label: 'Twitter', color: 'hover:bg-sky-500' },
+    { icon: Youtube, href: '#', label: 'YouTube', color: 'hover:bg-red-600' },
   ];
 
   return (
-    <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 border-t border-white/10">
+    <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 dark:from-black dark:to-slate-950 blue:from-slate-900 blue:to-slate-950 border-t border-white/10 transition-colors duration-500">
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
-          {/* Logo & Description */}
           <div className="lg:col-span-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -42,17 +59,16 @@ export default function Footer() {
               className="mb-6"
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg p-2">
-                  <Shield className="w-full h-full text-white" />
+                <div className="relative w-12 h-12">
+                  <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
                 </div>
                 <div>
-                  <div className="text-xl font-black text-white">ICS</div>
-                  <div className="text-xs text-slate-400">An ninh mạng</div>
+                  <div className="text-2xl font-black text-white">ICS</div>
+                  <div className="text-xs text-slate-400">Dashboard Solutions</div>
                 </div>
               </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-4">
-                Công ty Cổ phần An ninh mạng Quốc tế - Đối tác tin cậy bảo vệ 
-                doanh nghiệp của bạn trong thế giới số.
+                {t('footer.description')}
               </p>
               <div className="flex gap-3">
                 {socialLinks.map((social, index) => (
@@ -62,16 +78,15 @@ export default function Footer() {
                     aria-label={social.label}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.9 }}
-                    className="w-10 h-10 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 hover:border-blue-500/50 flex items-center justify-center transition-all duration-300"
+                    className={`w-10 h-10 rounded-lg bg-white/5 ${social.color} border border-white/10 hover:border-white/30 flex items-center justify-center transition-all duration-300`}
                   >
-                    <social.icon className="w-5 h-5 text-slate-400 hover:text-blue-400 transition-colors" />
+                    <social.icon className="w-5 h-5 text-slate-400 hover:text-white transition-colors" />
                   </motion.a>
                 ))}
               </div>
             </motion.div>
           </div>
 
-          {/* Links */}
           {footerLinks.map((section, index) => (
             <motion.div
               key={index}
@@ -85,10 +100,10 @@ export default function Footer() {
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a
-                      href="#"
+                      href={link.href}
                       className="text-slate-400 hover:text-blue-400 text-sm transition-colors duration-300 hover:translate-x-1 inline-block"
                     >
-                      {link}
+                      {link.label}
                     </a>
                   </li>
                 ))}
@@ -97,18 +112,17 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* Bottom Bar */}
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-slate-400 text-sm text-center md:text-left">
-              © {currentYear} ICS - An ninh mạng Quốc tế. All rights reserved.
+              © {currentYear} ICS Dashboard. {t('footer.rights')}
             </p>
             <div className="flex gap-6">
               <a href="#" className="text-slate-400 hover:text-blue-400 text-sm transition-colors">
-                Chính sách bảo mật
+                {t('footer.privacy')}
               </a>
               <a href="#" className="text-slate-400 hover:text-blue-400 text-sm transition-colors">
-                Điều khoản sử dụng
+                {t('footer.terms')}
               </a>
             </div>
           </div>
