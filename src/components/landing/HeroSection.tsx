@@ -107,12 +107,13 @@ export default function HeroSection() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight antialiased">
+            <h1 className="text-3xl md:text-5xl lg:text-6xl font-black mb-8 leading-relaxed antialiased">
               <span className="gradient-text animate-gradient block" style={{ 
                 fontFeatureSettings: '"kern" 1, "liga" 1',
                 WebkitFontSmoothing: 'antialiased',
                 MozOsxFontSmoothing: 'grayscale',
-                textRendering: 'optimizeLegibility'
+                textRendering: 'optimizeLegibility',
+                lineHeight: '1.5'
               }}>
                 {t('hero.title')}
               </span>

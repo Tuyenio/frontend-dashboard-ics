@@ -68,16 +68,16 @@ export default function ForgotPasswordPage() {
         <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 rounded-3xl blur-2xl opacity-20"></div>
 
         {/* Card */}
-        <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8 md:p-12">
+        <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-6 md:p-8">
           {/* Logo */}
-          <div className="flex flex-col items-center mb-4">
+          <div className="flex flex-col items-center mb-6">
             <div className="relative w-36 h-36 mb-3">
               <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
             </div>
-            <h1 className="text-sm font-black text-slate-900 dark:text-white mb-1 whitespace-nowrap">
+            <h1 className="text-xs font-light text-slate-900 dark:text-white mb-2 whitespace-nowrap">
               Quên mật khẩu?
             </h1>
-            <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
+            <p className="text-sm text-slate-600 dark:text-slate-400 text-center max-w-xs" style={{ lineHeight: '1.5' }}>
               Nhập email của bạn để nhận link khôi phục mật khẩu
             </p>
           </div>
