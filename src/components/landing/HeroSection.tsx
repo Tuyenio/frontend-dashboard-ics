@@ -53,7 +53,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black pt-20 transition-colors duration-500">
+    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black pt-32 transition-colors duration-500">
       {/* Animated background particles */}
       <motion.div style={{ y, opacity }} className="absolute inset-0 overflow-hidden" suppressHydrationWarning>
         {particles.current.map((particle, i) => (

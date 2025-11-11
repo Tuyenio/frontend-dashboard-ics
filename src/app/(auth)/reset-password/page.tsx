@@ -49,7 +49,7 @@ function ResetPasswordForm() {
 
     try {
       const response = await fetch('http://localhost:5000/auth/reset-password', {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -140,7 +140,7 @@ function ResetPasswordForm() {
             <div className="relative w-36 h-36 mb-3">
               <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
             </div>
-            <h1 className="text-base font-black text-slate-900 dark:text-white mb-1">
+            <h1 className="text-sm font-black text-slate-900 dark:text-white mb-1 whitespace-nowrap">
               Đặt lại mật khẩu
             </h1>
             <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
