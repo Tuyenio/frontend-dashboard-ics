@@ -16,7 +16,7 @@ interface VideoContainerProps {
  * Premium video player with custom controls
  */
 export default function VideoContainer({
-  videoUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+  videoUrl = 'https://www.youtube.com/embed/-Ju97IVFVFo?si=BBQ_8ol9kN1kcfXo',
   thumbnailUrl,
   title,
   subtitle,
