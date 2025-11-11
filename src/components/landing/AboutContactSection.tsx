@@ -84,12 +84,12 @@ export default function AboutContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl"
+            className="bg-white dark:bg-slate-900 blue:bg-slate-900 light:bg-white rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 blue:border-slate-800 light:border-slate-200 shadow-2xl"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
               {/* Contact Info - Left Side */}
               <div className="p-8 md:p-12">
-                <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-8">
+                <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white blue:text-white light:text-slate-900 mb-8">
                   {t('contact.title')}
                 </h3>
                 <div className="space-y-4 mb-8">

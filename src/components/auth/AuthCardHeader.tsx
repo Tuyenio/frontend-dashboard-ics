@@ -23,10 +23,10 @@ export default function AuthCardHeader({ title, subtitle }: AuthCardHeaderProps)
           className="object-contain" 
         />
       </div>
-      <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">
+      <h1 className="text-3xl font-black text-slate-900 light:text-slate-900 dark:text-white blue:text-white mb-2">
         {title}
       </h1>
-      <p className="text-slate-600 dark:text-slate-400 text-center">
+      <p className="text-slate-600 light:text-slate-600 dark:text-slate-400 blue:text-slate-400 text-center">
         {subtitle}
       </p>
     </div>

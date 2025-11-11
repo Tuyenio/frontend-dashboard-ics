@@ -47,7 +47,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 dark:from-black dark:to-slate-950 blue:from-slate-900 blue:to-slate-950 border-t border-white/10 transition-colors duration-500">
+    <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 light:from-white light:to-slate-50 dark:from-black dark:to-slate-950 blue:from-slate-900 blue:to-slate-950 border-t border-white/10 light:border-slate-200 transition-colors duration-500">
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           <div className="lg:col-span-2">
@@ -63,11 +63,11 @@ export default function Footer() {
                   <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-white">ICS</div>
-                  <div className="text-xs text-slate-400">Dashboard Solutions</div>
+                  <div className="text-2xl font-black text-white light:text-slate-900">ICS</div>
+                  <div className="text-xs text-slate-400 light:text-slate-600">Dashboard Solutions</div>
                 </div>
               </div>
-              <p className="text-slate-400 text-sm leading-relaxed mb-4">
+              <p className="text-slate-400 light:text-slate-600 text-sm leading-relaxed mb-4">
                 {t('footer.description')}
               </p>
               <div className="flex gap-3">
@@ -78,9 +78,9 @@ export default function Footer() {
                     aria-label={social.label}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.9 }}
-                    className={`w-10 h-10 rounded-lg bg-white/5 ${social.color} border border-white/10 hover:border-white/30 flex items-center justify-center transition-all duration-300`}
+                    className={`w-10 h-10 rounded-lg bg-white/5 light:bg-slate-100 ${social.color} border border-white/10 light:border-slate-300 hover:border-white/30 light:hover:border-slate-400 flex items-center justify-center transition-all duration-300`}
                   >
-                    <social.icon className="w-5 h-5 text-slate-400 hover:text-white transition-colors" />
+                    <social.icon className="w-5 h-5 text-slate-400 light:text-slate-600 hover:text-white light:hover:text-slate-900 transition-colors" />
                   </motion.a>
                 ))}
               </div>
@@ -95,13 +95,13 @@ export default function Footer() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-white font-bold mb-4">{section.title}</h3>
+              <h3 className="text-white light:text-slate-900 font-bold mb-4">{section.title}</h3>
               <ul className="space-y-2">
                 {section.links.map((link, linkIndex) => (
                   <li key={linkIndex}>
                     <a
                       href={link.href}
-                      className="text-slate-400 hover:text-blue-400 text-sm transition-colors duration-300 hover:translate-x-1 inline-block"
+                      className="text-slate-400 light:text-slate-600 hover:text-blue-400 light:hover:text-blue-600 text-sm transition-colors duration-300 hover:translate-x-1 inline-block"
                     >
                       {link.label}
                     </a>
@@ -112,16 +112,16 @@ export default function Footer() {
           ))}
         </div>
 
-        <div className="pt-8 border-t border-white/10">
+        <div className="pt-8 border-t border-white/10 light:border-slate-200">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-slate-400 text-sm text-center md:text-left">
+            <p className="text-slate-400 light:text-slate-600 text-sm text-center md:text-left">
               © {currentYear} ICS Dashboard. {t('footer.rights')}
             </p>
             <div className="flex gap-6">
-              <a href="#" className="text-slate-400 hover:text-blue-400 text-sm transition-colors">
+              <a href="#" className="text-slate-400 light:text-slate-600 hover:text-blue-400 light:hover:text-blue-600 text-sm transition-colors">
                 {t('footer.privacy')}
               </a>
-              <a href="#" className="text-slate-400 hover:text-blue-400 text-sm transition-colors">
+              <a href="#" className="text-slate-400 light:text-slate-600 hover:text-blue-400 light:hover:text-blue-600 text-sm transition-colors">
                 {t('footer.terms')}
               </a>
             </div>

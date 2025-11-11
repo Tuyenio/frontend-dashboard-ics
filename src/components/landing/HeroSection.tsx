@@ -17,6 +17,16 @@ export default function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.8]);
 
+  // Fixed positions for particles to avoid hydration mismatch
+  const particles = useRef(
+    Array.from({ length: 50 }, (_, i) => ({
+      left: (i * 7.3) % 100,
+      top: (i * 13.7) % 100,
+      duration: 3 + (i % 3),
+      delay: (i % 5) * 0.4
+    }))
+  );
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -45,14 +55,14 @@ export default function HeroSection() {
   return (
     <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 pt-20 transition-colors duration-500">
       {/* Animated background particles */}
-      <motion.div style={{ y, opacity }} className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
+      <motion.div style={{ y, opacity }} className="absolute inset-0 overflow-hidden" suppressHydrationWarning>
+        {particles.current.map((particle, i) => (
           <motion.div
             key={i}
             className="absolute w-2 h-2 bg-blue-400/20 dark:bg-blue-500/10 rounded-full"
-            style={{ left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%` }}
+            style={{ left: `${particle.left}%`, top: `${particle.top}%` }}
             animate={{ y: [0, -30, 0], opacity: [0.2, 0.8, 0.2] }}
-            transition={{ duration: 3 + Math.random() * 2, repeat: Infinity, delay: Math.random() * 2 }}
+            transition={{ duration: particle.duration, repeat: Infinity, delay: particle.delay }}
           />
         ))}
       </motion.div>
@@ -97,13 +107,13 @@ export default function HeroSection() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl font-black mb-6 leading-tight">
-              <span className="gradient-text animate-gradient">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
+              <span className="gradient-text animate-gradient block">
                 {t('hero.title')}
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-4xl mx-auto leading-relaxed mb-4">
+            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-4xl mx-auto leading-relaxed mb-6 px-4">
               {t('hero.description')}
             </p>
             
