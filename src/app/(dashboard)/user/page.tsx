@@ -72,7 +72,7 @@ export default function UserDashboard() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-slate-600 dark:text-slate-400">Đang tải...</p>
@@ -111,9 +111,9 @@ export default function UserDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 transition-colors duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black transition-colors duration-500">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-900 blue:bg-slate-900 border-b border-slate-200 dark:border-slate-800 blue:border-slate-800 sticky top-0 z-50">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -160,13 +160,13 @@ export default function UserDashboard() {
           transition={{ delay: 0.1 }}
           className="mb-8"
         >
-          <div className="bg-white dark:bg-slate-900 blue:bg-slate-900 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 blue:border-slate-800 shadow-xl">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
             <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
               Thông tin tài khoản
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 rounded-xl">
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                 <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
                   <User className="w-6 h-6 text-white" />
                 </div>
@@ -176,7 +176,7 @@ export default function UserDashboard() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 rounded-xl">
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                 <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
                   <Mail className="w-6 h-6 text-white" />
                 </div>
@@ -186,7 +186,7 @@ export default function UserDashboard() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 rounded-xl">
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                 <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
                   <Shield className="w-6 h-6 text-white" />
                 </div>
@@ -196,7 +196,7 @@ export default function UserDashboard() {
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 rounded-xl">
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
                 <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
                   <Calendar className="w-6 h-6 text-white" />
                 </div>
@@ -220,7 +220,7 @@ export default function UserDashboard() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + index * 0.1 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              className="bg-white dark:bg-slate-900 blue:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 blue:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer"
             >
               <div className={`w-12 h-12 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center mb-4`}>
                 <feature.icon className="w-6 h-6 text-white" />
@@ -240,7 +240,7 @@ export default function UserDashboard() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 blue:from-blue-900/20 blue:to-cyan-900/20 border border-blue-200 dark:border-blue-800 blue:border-blue-800 rounded-2xl p-6 md:p-8"
+          className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-6 md:p-8"
         >
           <h3 className="text-xl font-bold text-blue-900 dark:text-blue-300 mb-2">
             Dashboard người dùng 📊

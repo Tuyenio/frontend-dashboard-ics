@@ -19,8 +19,8 @@ export default function ServicesSection() {
   ];
 
   return (
-    <section id="services" className="py-24 bg-white dark:bg-black blue:bg-slate-950 relative overflow-hidden transition-colors duration-500">
-      <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 dark:opacity-10 blue:opacity-10"></div>
+    <section id="services" className="py-24 bg-white dark:bg-black relative overflow-hidden transition-colors duration-500">
+      <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 dark:opacity-10"></div>
       
       <div className="container mx-auto px-6 relative z-10">
         <motion.div

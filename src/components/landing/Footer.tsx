@@ -47,7 +47,7 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 light:from-white light:to-slate-50 dark:from-black dark:to-slate-950 blue:from-slate-900 blue:to-slate-950 border-t border-white/10 light:border-slate-200 transition-colors duration-500">
+    <footer className="relative bg-gradient-to-b from-slate-900 to-slate-950 light:from-white light:to-slate-50 dark:from-black dark:to-slate-950 border-t border-white/10 light:border-slate-200 transition-colors duration-500">
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
           <div className="lg:col-span-2">
@@ -58,13 +58,13 @@ export default function Footer() {
               viewport={{ once: true }}
               className="mb-6"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="relative w-12 h-12">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="relative w-16 h-16">
                   <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-white light:text-slate-900">ICS</div>
-                  <div className="text-xs text-slate-400 light:text-slate-600">Dashboard Solutions</div>
+                  <div className="text-3xl font-black text-white light:text-slate-900">ICS</div>
+                  <div className="text-sm text-slate-400 light:text-slate-600">Dashboard Solutions</div>
                 </div>
               </div>
               <p className="text-slate-400 light:text-slate-600 text-sm leading-relaxed mb-4">

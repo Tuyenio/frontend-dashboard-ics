@@ -22,7 +22,7 @@ export default function ViewPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black flex items-center justify-center">
         <div className="flex flex-col items-center gap-4">
           <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
           <p className="text-slate-600 dark:text-slate-400">Đang tải...</p>
@@ -38,9 +38,9 @@ export default function ViewPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 transition-colors duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black transition-colors duration-500">
       {/* Header */}
-      <header className="bg-white dark:bg-slate-900 blue:bg-slate-900 border-b border-slate-200 dark:border-slate-800 blue:border-slate-800 sticky top-0 z-50">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ export default function ViewPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8 text-center"
         >
-          <div className="inline-flex items-center gap-3 mb-4 px-6 py-3 bg-blue-100 dark:bg-blue-900/20 blue:bg-blue-900/20 rounded-full">
+          <div className="inline-flex items-center gap-3 mb-4 px-6 py-3 bg-blue-100 dark:bg-blue-900/20 rounded-full">
             <Eye className="w-5 h-5 text-blue-600 dark:text-blue-400" />
             <span className="text-blue-600 dark:text-blue-400 font-semibold">Chế độ xem công khai</span>
           </div>
@@ -101,7 +101,7 @@ export default function ViewPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 + index * 0.1 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              className="bg-white dark:bg-slate-900 blue:bg-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-800 blue:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-300"
+              className="bg-white dark:bg-slate-900 rounded-2xl p-8 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
               <div className={`w-16 h-16 bg-gradient-to-br ${stat.color} rounded-xl flex items-center justify-center mb-4 mx-auto`}>
                 <stat.icon className="w-8 h-8 text-white" />
@@ -121,7 +121,7 @@ export default function ViewPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="bg-white dark:bg-slate-900 blue:bg-slate-900 rounded-2xl p-8 md:p-12 border border-slate-200 dark:border-slate-800 blue:border-slate-800 shadow-xl mb-8"
+          className="bg-white dark:bg-slate-900 rounded-2xl p-8 md:p-12 border border-slate-200 dark:border-slate-800 shadow-xl mb-8"
         >
           <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-6 text-center">
             Tính năng nổi bật
@@ -136,7 +136,7 @@ export default function ViewPage() {
             ].map((feature, index) => (
               <div
                 key={index}
-                className="p-6 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 rounded-xl hover:shadow-lg transition-all duration-300"
+                className="p-6 bg-slate-50 dark:bg-slate-800 rounded-xl hover:shadow-lg transition-all duration-300"
               >
                 <div className="text-4xl mb-3">{feature.emoji}</div>
                 <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-2">

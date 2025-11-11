@@ -53,7 +53,7 @@ export default function HeroSection() {
   };
 
   return (
-    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 pt-20 transition-colors duration-500">
+    <section ref={sectionRef} id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black pt-20 transition-colors duration-500">
       {/* Animated background particles */}
       <motion.div style={{ y, opacity }} className="absolute inset-0 overflow-hidden" suppressHydrationWarning>
         {particles.current.map((particle, i) => (
@@ -107,8 +107,13 @@ export default function HeroSection() {
               </span>
             </div>
             
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight">
-              <span className="gradient-text animate-gradient block">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-8 leading-tight antialiased">
+              <span className="gradient-text animate-gradient block" style={{ 
+                fontFeatureSettings: '"kern" 1, "liga" 1',
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                textRendering: 'optimizeLegibility'
+              }}>
                 {t('hero.title')}
               </span>
             </h1>
@@ -134,15 +139,15 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <a href="/register" className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold rounded-xl shadow-2xl shadow-blue-500/50 dark:shadow-blue-500/30 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
-              <span className="flex items-center justify-center gap-2">
+            <a href="/register" className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-black rounded-xl shadow-2xl shadow-blue-500/50 dark:shadow-blue-500/40 transition-all duration-300 hover:scale-105 hover:-translate-y-1 border border-blue-400/20">
+              <span className="flex items-center justify-center gap-2 text-shadow-sm">
                 {t('hero.cta.primary')}
                 <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </span>
             </a>
-            <a href="#about" className="group px-8 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 font-bold rounded-xl border-2 border-blue-600 dark:border-blue-400 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
+            <a href="#about" className="group px-8 py-4 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-300 font-black rounded-xl border-2 border-blue-600 dark:border-blue-400 shadow-lg dark:shadow-xl dark:shadow-blue-500/20 transition-all duration-300 hover:scale-105 hover:-translate-y-1">
               <span className="flex items-center justify-center gap-2">
                 {t('hero.cta.secondary')}
                 <svg className="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -14,7 +14,6 @@ export const STORAGE_KEYS = {
 export const THEME_VALUES = {
   LIGHT: 'light',
   DARK: 'dark',
-  BLUE: 'blue',
 } as const;
 
 export const LANGUAGE_VALUES = {

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Sun, Moon, Palette } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import Image from 'next/image';
 import { useTheme } from '@/contexts/ThemeContext';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -11,7 +11,7 @@ import LanguageDropdown from '@/components/common/LanguageDropdown';
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { theme, cycleTheme } = useTheme();
+  const { theme, toggleTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
@@ -64,16 +64,16 @@ export default function Navigation() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-4 group"
           >
-            <div className="relative w-12 h-12 group-hover:scale-110 transition-transform duration-300">
+            <div className="relative w-16 h-16 group-hover:scale-105 transition-transform duration-300">
               <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" priority />
             </div>
             <div>
-              <div className="text-xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+              <div className="text-2xl font-black text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                 ICS
               </div>
-              <div className="text-xs text-slate-600 dark:text-slate-400">Dashboard</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Dashboard</div>
             </div>
           </motion.a>
 
@@ -107,20 +107,20 @@ export default function Navigation() {
             {/* Language Dropdown */}
             <LanguageDropdown />
 
-            {/* Theme Toggle - Cycle through 3 modes */}
+            {/* Theme Toggle - Light/Dark */}
             <button
-              onClick={cycleTheme}
-              className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 blue:bg-slate-800 text-slate-600 dark:text-slate-400 blue:text-blue-400 hover:text-blue-600 dark:hover:text-blue-400 blue:hover:text-cyan-400 transition-colors"
-              aria-label="Cycle theme"
-              title={theme === 'light' ? 'Sáng → Tối' : theme === 'dark' ? 'Tối → Xanh' : 'Xanh → Sáng'}
+              onClick={toggleTheme}
+              className="w-10 h-10 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+              aria-label="Toggle theme"
+              title={theme === 'light' ? 'Chuyển sang Tối' : 'Chuyển sang Sáng'}
             >
-              {theme === 'light' ? <Sun className="w-5 h-5" /> : theme === 'dark' ? <Moon className="w-5 h-5" /> : <Palette className="w-5 h-5" />}
+              {theme === 'light' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
 
             {/* Login Button */}
             <a
               href="/login"
-              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-bold rounded-lg shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105"
+              className="px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-black rounded-lg shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 dark:shadow-blue-500/40 transition-all duration-300 hover:scale-105 border border-blue-400/20"
             >
               {t('nav.login')}
             </a>
@@ -162,18 +162,18 @@ export default function Navigation() {
               </div>
               
               <button
-                onClick={cycleTheme}
-                className="w-12 h-12 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 blue:bg-slate-800 text-slate-600 dark:text-slate-400 blue:text-blue-400 hover:text-blue-600 dark:hover:text-blue-400 blue:hover:text-cyan-400 transition-colors"
-                title={theme === 'light' ? 'Sáng → Tối' : theme === 'dark' ? 'Tối → Xanh' : 'Xanh → Sáng'}
+                onClick={toggleTheme}
+                className="w-12 h-12 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                title={theme === 'light' ? 'Chuyển sang Tối' : 'Chuyển sang Sáng'}
               >
-                {theme === 'light' ? <Sun className="w-5 h-5" /> : theme === 'dark' ? <Moon className="w-5 h-5" /> : <Palette className="w-5 h-5" />}
+                {theme === 'light' ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
               </button>
             </div>
             
             <a
               href="/login"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-bold rounded-lg text-center shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-300"
+              className="block w-full px-6 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-black rounded-lg text-center shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 dark:shadow-blue-500/40 transition-all duration-300 border border-blue-400/20"
             >
               {t('nav.login')}
             </a>

@@ -85,7 +85,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 flex items-center justify-center p-6 transition-colors duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black flex items-center justify-center p-6 transition-colors duration-500">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5"></div>
 
@@ -109,16 +109,16 @@ export default function RegisterPage() {
         <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 rounded-3xl blur-2xl opacity-20"></div>
 
         {/* Card */}
-        <div className="relative bg-white dark:bg-slate-900 blue:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 blue:border-slate-800 p-8 md:p-12">
+        <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-slate-200 dark:border-slate-800 p-8 md:p-12">
           {/* Logo */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="relative w-16 h-16 mb-4">
+          <div className="flex flex-col items-center mb-4">
+            <div className="relative w-36 h-36 mb-3">
               <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
             </div>
-            <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-2">
+            <h1 className="text-base font-black text-slate-900 dark:text-white mb-1">
               Đăng ký
             </h1>
-            <p className="text-slate-600 dark:text-slate-400 text-center">
+            <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
               Tạo tài khoản mới để bắt đầu sử dụng ICS Dashboard
             </p>
           </div>
@@ -128,7 +128,7 @@ export default function RegisterPage() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm"
+              className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl text-red-600 dark:text-red-400 text-sm"
             >
               {error}
             </motion.div>
@@ -139,17 +139,17 @@ export default function RegisterPage() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl text-green-600 dark:text-green-400 text-sm"
+              className="mb-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl text-green-600 dark:text-green-400 text-sm"
             >
               {success}
             </motion.div>
           )}
 
           {/* Register Form */}
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-3">
             {/* Full Name Input */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Họ và tên
               </label>
               <div className="relative">
@@ -161,14 +161,14 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   placeholder="Nguyễn Văn A"
-                  className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 border border-slate-200 dark:border-slate-700 blue:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-12 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
             {/* Email Input */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Email
               </label>
               <div className="relative">
@@ -180,14 +180,14 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   placeholder="email@example.com"
-                  className="w-full pl-12 pr-4 py-3 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 border border-slate-200 dark:border-slate-700 blue:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-12 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
             </div>
 
             {/* Password Input */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Mật khẩu
               </label>
               <div className="relative">
@@ -199,7 +199,7 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   placeholder="Tối thiểu 8 ký tự"
-                  className="w-full pl-12 pr-12 py-3 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 border border-slate-200 dark:border-slate-700 blue:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-12 pr-12 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
                   type="button"
@@ -213,7 +213,7 @@ export default function RegisterPage() {
 
             {/* Confirm Password Input */}
             <div>
-              <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">
+              <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Xác nhận mật khẩu
               </label>
               <div className="relative">
@@ -225,7 +225,7 @@ export default function RegisterPage() {
                   onChange={handleChange}
                   required
                   placeholder="Nhập lại mật khẩu"
-                  className="w-full pl-12 pr-12 py-3 bg-slate-50 dark:bg-slate-800 blue:bg-slate-800 border border-slate-200 dark:border-slate-700 blue:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                  className="w-full pl-12 pr-12 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
                   type="button"
@@ -255,7 +255,7 @@ export default function RegisterPage() {
           </form>
 
           {/* Divider */}
-          <div className="my-8 flex items-center gap-4">
+          <div className="my-4 flex items-center gap-4">
             <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
             <span className="text-sm text-slate-500 dark:text-slate-400">Hoặc</span>
             <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
@@ -265,14 +265,14 @@ export default function RegisterPage() {
           <button
             onClick={handleGoogleRegister}
             type="button"
-            className="w-full py-3 bg-white dark:bg-slate-800 blue:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 blue:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 text-slate-700 dark:text-slate-300 font-semibold rounded-xl transition-all duration-300 hover:scale-[1.02] flex items-center justify-center gap-3"
+            className="w-full py-3 bg-white light:bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl flex items-center justify-center gap-3 shadow-md"
           >
-            <Chrome className="w-5 h-5" />
-            <span>Đăng ký với Google</span>
+            <Chrome className="w-5 h-5 text-blue-600" />
+            <span className="font-semibold">Đăng ký với Google</span>
           </button>
 
           {/* Login Link */}
-          <div className="mt-8 text-center">
+          <div className="mt-4 text-center">
             <p className="text-sm text-slate-600 dark:text-slate-400">
               Đã có tài khoản?{' '}
               <Link

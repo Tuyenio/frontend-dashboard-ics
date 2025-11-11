@@ -17,7 +17,7 @@ export default function ThemeTest() {
   if (!mounted) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 p-4 rounded-lg shadow-xl z-50 bg-white dark:bg-slate-900 blue:bg-slate-800 border border-slate-200 dark:border-slate-700 blue:border-slate-600">
+    <div className="fixed bottom-4 right-4 p-4 rounded-lg shadow-xl z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
       <div className="mb-2 text-sm font-bold">
         Current Theme: <span className="text-blue-600">{theme}</span>
       </div>

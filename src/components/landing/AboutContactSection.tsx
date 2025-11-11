@@ -24,7 +24,7 @@ export default function AboutContactSection() {
   ];
 
   return (
-    <section id="about" className="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black blue:from-slate-950 blue:via-slate-900 blue:to-slate-950 relative overflow-hidden transition-colors duration-500">
+    <section id="about" className="py-24 bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black relative overflow-hidden transition-colors duration-500">
       <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-5 dark:opacity-10"></div>
       
       <div className="container mx-auto px-6 relative z-10">
@@ -84,12 +84,12 @@ export default function AboutContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="bg-white dark:bg-slate-900 blue:bg-slate-900 light:bg-white rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 blue:border-slate-800 light:border-slate-200 shadow-2xl"
+            className="bg-white dark:bg-slate-900 light:bg-white rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 light:border-slate-200 shadow-2xl"
           >
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
               {/* Contact Info - Left Side */}
               <div className="p-8 md:p-12">
-                <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white blue:text-white light:text-slate-900 mb-8">
+                <h3 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white light:text-slate-900 mb-8">
                   {t('contact.title')}
                 </h3>
                 <div className="space-y-4 mb-8">

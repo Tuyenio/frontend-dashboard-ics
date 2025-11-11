@@ -29,27 +29,27 @@ export default function AuthInput({
 
   return (
     <div>
-      <label className="block text-sm font-semibold text-slate-700 light:text-slate-700 dark:text-slate-300 blue:text-slate-300 mb-2">
+      <label className="block text-xs font-semibold text-slate-700 light:text-slate-700 dark:text-slate-300 mb-2">
         {label}
       </label>
       <div className="relative">
-        <Icon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 light:text-slate-500" />
+        <Icon className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 light:text-slate-500" />
         <input
           type={inputType}
-          className={`w-full pl-12 ${isPassword ? 'pr-12' : 'pr-4'} py-3 bg-slate-50 light:bg-slate-100 dark:bg-slate-800 blue:bg-slate-800 border ${
+          className={`w-full pl-11 ${isPassword ? 'pr-11' : 'pr-4'} py-2.5 text-sm bg-slate-50 light:bg-slate-100 dark:bg-slate-800 border ${
             error 
               ? 'border-red-500 dark:border-red-400' 
-              : 'border-slate-200 light:border-slate-300 dark:border-slate-700 blue:border-slate-700'
-          } rounded-xl text-slate-900 light:text-slate-900 dark:text-white blue:text-white placeholder-slate-400 light:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all`}
+              : 'border-slate-200 light:border-slate-300 dark:border-slate-700'
+          } rounded-xl text-slate-900 light:text-slate-900 dark:text-white placeholder-slate-400 light:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all`}
           {...props}
         />
         {isPassword && (
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 light:text-slate-500 hover:text-slate-600 light:hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
+            className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 light:text-slate-500 hover:text-slate-600 light:hover:text-slate-700 dark:hover:text-slate-300 transition-colors"
           >
-            {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+            {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
           </button>
         )}
       </div>

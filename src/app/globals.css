@@ -1,56 +1,40 @@
 @import "tailwindcss";
 
-/* Light Mode - Default */
+/* Light Mode - Clean & Professional */
 :root,
 .light {
-  /* Clean, crisp light theme - Pure white, high contrast */
+  /* Pure white with high contrast for professional look */
   --background: #ffffff;
-  --foreground: #0a0a0a;
+  --foreground: #0f172a;
   --card-bg: #ffffff;
-  --card-border: #e5e5e5;
-  --primary: #0066ff;
-  --primary-hover: #0052cc;
-  --secondary: #00a3cc;
-  --accent: #6366f1;
-  --text-primary: #0a0a0a;
-  --text-secondary: #525252;
-  --text-muted: #737373;
-  --shadow: rgba(0, 0, 0, 0.1);
-  --glow: rgba(0, 102, 255, 0.15);
+  --card-border: #e2e8f0;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --secondary: #0ea5e9;
+  --accent: #8b5cf6;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --shadow: rgba(0, 0, 0, 0.08);
+  --glow: rgba(37, 99, 235, 0.15);
 }
 
-/* Dark Mode - True Black Theme */
+/* Dark Mode - Premium Deep Blue (Xanh đậm sang trọng) */
 .dark {
-  --background: #000000;
-  --foreground: #ffffff;
-  --card-bg: #0f0f0f;
-  --card-border: #262626;
-  --primary: #60a5fa;
-  --primary-hover: #3b82f6;
-  --secondary: #22d3ee;
+  /* Deep blue background with excellent contrast - Professional & Modern */
+  --background: #0a1628;
+  --foreground: #f8fafc;
+  --card-bg: #0f1f3a;
+  --card-border: #1e3a5f;
+  --primary: #3b82f6;
+  --primary-hover: #60a5fa;
+  --secondary: #06b6d4;
   --accent: #a78bfa;
-  --text-primary: #ffffff;
-  --text-secondary: #e5e5e5;
-  --text-muted: #a3a3a3;
-  --shadow: rgba(0, 0, 0, 0.8);
-  --glow: rgba(96, 165, 250, 0.5);
-}
-
-/* Blue Theme - Current Navy Blue Design */
-.blue {
-  --background: #0a0f1c;
-  --foreground: #f1f5f9;
-  --card-bg: #1e293b;
-  --card-border: #334155;
-  --primary: #60a5fa;
-  --primary-hover: #3b82f6;
-  --secondary: #22d3ee;
-  --accent: #a78bfa;
-  --text-primary: #f1f5f9;
-  --text-secondary: #cbd5e1;
+  --text-primary: #f8fafc;
+  --text-secondary: #e2e8f0;
   --text-muted: #94a3b8;
-  --shadow: rgba(0, 0, 0, 0.5);
-  --glow: rgba(96, 165, 250, 0.4);
+  --shadow: rgba(0, 0, 0, 0.6);
+  --glow: rgba(59, 130, 246, 0.4);
 }
 
 body {
@@ -67,6 +51,17 @@ body {
 
 /* Smooth text rendering for all elements */
 * {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Vietnamese Diacritics Enhancement */
+body,
+h1, h2, h3, h4, h5, h6,
+p, span, a, button, input, textarea {
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -275,10 +270,19 @@ html {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   background-size: 200% 200%;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 1.1;
   animation: gradient 8s ease infinite;
+  /* Enhanced Vietnamese text rendering */
+  font-feature-settings: "kern" 1, "liga" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-synthesis: none;
+  /* Prevent color bleeding on gradient text */
+  -webkit-text-stroke: 0.5px transparent;
+  paint-order: stroke fill;
 }
 
 /* Enhanced Card Glow */

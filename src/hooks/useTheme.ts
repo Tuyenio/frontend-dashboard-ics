@@ -8,10 +8,10 @@
 import { useState, useEffect } from 'react';
 import { STORAGE_KEYS, THEME_VALUES } from '@/constants';
 
-export type Theme = 'light' | 'dark' | 'blue';
+export type Theme = 'light' | 'dark';
 
 export function useTheme() {
-  const [theme, setThemeState] = useState<Theme>('blue');
+  const [theme, setThemeState] = useState<Theme>('dark');
   const [mounted, setMounted] = useState(false);
 
   /**
@@ -21,13 +21,13 @@ export function useTheme() {
     setMounted(true);
     const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME) as Theme;
     
-    if (savedTheme && Object.values(THEME_VALUES).includes(savedTheme)) {
+    if (savedTheme && ['light', 'dark'].includes(savedTheme)) {
       setThemeState(savedTheme as Theme);
       applyTheme(savedTheme as Theme);
     } else {
-      // Default to blue theme
-      setThemeState('blue');
-      applyTheme('blue');
+      // Default to dark theme (premium deep blue)
+      setThemeState('dark');
+      applyTheme('dark');
     }
   }, []);
 
@@ -38,7 +38,7 @@ export function useTheme() {
     if (typeof document === 'undefined') return;
     
     const html = document.documentElement;
-    html.classList.remove('light', 'dark', 'blue');
+    html.classList.remove('light', 'dark');
     html.classList.add(newTheme);
   };
 
@@ -52,17 +52,11 @@ export function useTheme() {
   };
 
   /**
-   * Cycle through themes
+   * Toggle between light and dark themes
    */
-  const cycleTheme = () => {
-    setThemeState((prev: Theme) => {
-      if (prev === 'light') return 'dark';
-      if (prev === 'dark') return 'blue';
-      return 'light';
-    });
-    
-    // Apply the cycled theme
-    const newTheme = theme === 'light' ? 'dark' : theme === 'dark' ? 'blue' : 'light';
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setThemeState(newTheme);
     localStorage.setItem(STORAGE_KEYS.THEME, newTheme);
     applyTheme(newTheme);
   };
@@ -70,7 +64,7 @@ export function useTheme() {
   return {
     theme,
     setTheme,
-    cycleTheme,
+    toggleTheme,
     mounted,
   };
 }
