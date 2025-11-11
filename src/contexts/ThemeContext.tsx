@@ -31,8 +31,10 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   const applyTheme = (newTheme: Theme) => {
     const html = document.documentElement;
+    console.log('Applying theme:', newTheme); // Debug log
     html.classList.remove('light', 'dark', 'blue');
     html.classList.add(newTheme);
+    console.log('HTML classes:', html.className); // Debug log
   };
 
   useEffect(() => {

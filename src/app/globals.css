@@ -3,19 +3,20 @@
 /* Light Mode - Default */
 :root,
 .light {
+  /* Clean, crisp light theme - Pure white, high contrast */
   --background: #ffffff;
-  --foreground: #171717;
-  --card-bg: #f8fafc;
-  --card-border: #e2e8f0;
-  --primary: #3b82f6;
-  --primary-hover: #2563eb;
-  --secondary: #06b6d4;
-  --accent: #8b5cf6;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --foreground: #0a0a0a;
+  --card-bg: #ffffff;
+  --card-border: #e5e5e5;
+  --primary: #0066ff;
+  --primary-hover: #0052cc;
+  --secondary: #00a3cc;
+  --accent: #6366f1;
+  --text-primary: #0a0a0a;
+  --text-secondary: #525252;
+  --text-muted: #737373;
   --shadow: rgba(0, 0, 0, 0.1);
-  --glow: rgba(59, 130, 246, 0.3);
+  --glow: rgba(0, 102, 255, 0.15);
 }
 
 /* Dark Mode - True Black Theme */
@@ -55,8 +56,89 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Smooth text rendering for all elements */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Premium Heading Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-lexend), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+}
+
+h3 {
+  font-size: 1.875rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 { 
+    font-size: 2.5rem;
+    letter-spacing: -0.03em;
+  }
+  h2 { 
+    font-size: 2rem;
+    letter-spacing: -0.02em;
+  }
+  h3 { 
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+}
+
+p {
+  color: var(--text-secondary);
+  line-height: 1.75;
+  font-size: 1.0625rem;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Light mode paragraph styling */
+.light p {
+  color: #525252;
+  line-height: 1.8;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary-hover);
 }
 
 /* Custom Animations */
@@ -192,6 +274,11 @@ html {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  background-size: 200% 200%;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  animation: gradient 8s ease infinite;
 }
 
 /* Enhanced Card Glow */
@@ -209,4 +296,644 @@ html {
     0 10px 10px -5px var(--shadow),
     0 0 50px var(--glow);
   transform: translateY(-4px);
+}
+
+/* ============================================
+   THEME-SPECIFIC STYLES
+   ============================================ */
+
+/* Navigation - Theme aware */
+.light nav {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e5e5e5;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.light nav a,
+.light nav button,
+.light nav span,
+.light nav div {
+  color: #0a0a0a;
+}
+
+.light nav .text-slate-600,
+.light nav .text-slate-700 {
+  color: #525252 !important;
+}
+
+.dark nav {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.blue nav {
+  background: rgba(15, 23, 42, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Hero Section backgrounds */
+.light #hero {
+  background: #ffffff;
+  background-image: 
+    linear-gradient(to right, rgba(0, 102, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.light #hero::before {
+  display: none;
+}
+
+.light #hero h1,
+.light #hero h2,
+.light #hero p,
+.light #hero span {
+  color: #0a0a0a !important;
+}
+
+.light #hero .text-slate-600 {
+  color: #525252 !important;
+}
+
+.dark #hero {
+  background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(2, 6, 23), rgb(0, 0, 0));
+}
+
+.blue #hero {
+  background: linear-gradient(to bottom right, rgb(2, 6, 23), rgb(15, 23, 42), rgb(2, 6, 23));
+}
+
+/* Services Section backgrounds */
+.light #services {
+  background: #f9f9f9;
+  position: relative;
+}
+
+.light #services::after {
+  display: none;
+}
+
+.light #services h2,
+.light #services h3,
+.light #services p,
+.light #services span {
+  color: #0a0a0a !important;
+}
+
+.light #services .text-slate-600,
+.light #services .text-slate-400 {
+  color: #525252 !important;
+}
+
+.dark #services {
+  background: rgb(0, 0, 0);
+}
+
+.blue #services {
+  background: rgb(2, 6, 23);
+}
+
+/* About Section backgrounds */
+.light #about {
+  background: #ffffff;
+  position: relative;
+}
+
+.light #about h2,
+.light #about h3,
+.light #about p,
+.light #about span {
+  color: #0a0a0a !important;
+}
+
+.light #about .text-slate-600,
+.light #about .text-slate-400 {
+  color: #525252 !important;
+}
+
+.dark #about {
+  background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(2, 6, 23), rgb(0, 0, 0));
+}
+
+.blue #about {
+  background: linear-gradient(to bottom right, rgb(2, 6, 23), rgb(15, 23, 42), rgb(2, 6, 23));
+}
+
+/* Footer backgrounds */
+.light footer {
+  background: #0a0a0a;
+  border-top: 1px solid #262626;
+}
+
+.light footer h2,
+.light footer h3,
+.light footer h4,
+.light footer p,
+.light footer a,
+.light footer span,
+.light footer div {
+  color: #ffffff !important;
+}
+
+.light footer .text-slate-400,
+.light footer .text-slate-500 {
+  color: #a3a3a3 !important;
+}
+
+.dark footer {
+  background: linear-gradient(to bottom, rgb(0, 0, 0), rgb(2, 6, 23));
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+.blue footer {
+  background: linear-gradient(to bottom, rgb(15, 23, 42), rgb(2, 6, 23));
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Card styles - Theme aware */
+.light .card-bg,
+.light .bg-slate-50,
+.light .bg-slate-100,
+.light .bg-white {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+}
+
+.light .card-bg h1,
+.light .card-bg h2,
+.light .card-bg h3,
+.light .card-bg h4,
+.light .card-bg p,
+.light .card-bg span {
+  color: #0a0a0a !important;
+}
+
+.light .card-bg .text-slate-600,
+.light .card-bg .text-slate-400 {
+  color: #525252 !important;
+}
+
+.dark .card-bg {
+  background: rgb(15, 15, 15);
+  border-color: rgb(38, 38, 38);
+}
+
+.blue .card-bg {
+  background: rgb(30, 41, 59);
+  border-color: rgb(51, 65, 85);
+}
+
+/* Text colors - Theme aware */
+.light .text-theme-primary,
+.light .text-slate-900,
+.light .text-slate-800 {
+  color: #0a0a0a !important;
+  font-weight: 600;
+}
+
+.dark .text-theme-primary {
+  color: rgb(255, 255, 255);
+}
+
+.blue .text-theme-primary {
+  color: rgb(241, 245, 249);
+}
+
+.light .text-theme-secondary,
+.light .text-slate-600,
+.light .text-slate-500 {
+  color: #525252 !important;
+}
+
+.dark .text-theme-secondary {
+  color: rgb(229, 229, 229);
+}
+
+.blue .text-theme-secondary {
+  color: rgb(203, 213, 225);
+}
+
+/* Button hover states - Theme aware */
+.light button:hover,
+.light .btn:hover {
+  background-color: rgb(241, 245, 249);
+}
+
+.dark button:hover,
+.dark .btn:hover {
+  background-color: rgb(30, 41, 59);
+}
+
+.blue button:hover,
+.blue .btn:hover {
+  background-color: rgb(30, 41, 59);
+}
+
+/* Auth page backgrounds */
+.light .auth-page {
+  background: #ffffff;
+}
+
+.dark .auth-page {
+  background: linear-gradient(to bottom right, rgb(0, 0, 0), rgb(2, 6, 23), rgb(0, 0, 0));
+}
+
+.blue .auth-page {
+  background: linear-gradient(to bottom right, rgb(2, 6, 23), rgb(15, 23, 42), rgb(2, 6, 23));
+}
+
+/* ============================================
+   IMPORTANT: Force theme application
+   ============================================ */
+
+/* Ensure body always uses theme colors */
+html.light body,
+html.light {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+}
+
+html.dark body,
+html.dark {
+  background: #000000 !important;
+  color: #ffffff !important;
+}
+
+html.blue body,
+html.blue {
+  background: #0a0f1c !important;
+  color: #f1f5f9 !important;
+}
+
+/* Force all text elements to use theme colors */
+html.light h1, 
+html.light h2, 
+html.light h3, 
+html.light h4, 
+html.light h5, 
+html.light h6 {
+  color: #0a0a0a !important;
+}
+
+html.light p,
+html.light span,
+html.light div {
+  color: inherit;
+}
+
+html.light .text-slate-600,
+html.light .text-slate-700,
+html.light .text-slate-800,
+html.light .text-slate-900 {
+  color: #0a0a0a !important;
+}
+
+html.light .text-slate-400,
+html.light .text-slate-500 {
+  color: #525252 !important;
+}
+
+html.light .text-slate-300 {
+  color: #737373 !important;
+}
+
+/* Force sections to use theme colors */
+html.light section {
+  background: var(--background);
+}
+
+html.dark section {
+  background: var(--background);
+}
+
+html.blue section {
+  background: var(--background);
+}
+
+/* ============================================
+   LIGHT MODE - Text Color Overrides (Critical!)
+   ============================================ */
+
+/* Override ALL Tailwind text colors in light mode */
+.light .text-white {
+  color: #0a0a0a !important;
+}
+
+.light .text-blue-600,
+.light .text-blue-400 {
+  color: #0066ff !important;
+}
+
+.light .text-slate-900,
+.light .text-slate-800,
+.light .text-slate-700 {
+  color: #0a0a0a !important;
+}
+
+.light .text-slate-600,
+.light .text-slate-500 {
+  color: #525252 !important;
+}
+
+.light .text-slate-400,
+.light .text-slate-300 {
+  color: #737373 !important;
+}
+
+/* Make sure all headings are black in light mode */
+.light h1,
+.light h2,
+.light h3,
+.light h4,
+.light h5,
+.light h6 {
+  color: #0a0a0a !important;
+}
+
+/* Force paragraph and span colors */
+.light p,
+.light span:not(.gradient-text) {
+  color: #0a0a0a;
+}
+
+/* Buttons in light mode */
+.light .bg-gradient-to-r {
+  color: #ffffff !important;
+}
+
+/* Tags/badges in light mode */
+.light .bg-blue-100,
+.light .bg-slate-100 {
+  background: #f5f5f5 !important;
+  color: #0a0a0a !important;
+}
+
+.light .text-blue-600 {
+  color: #0066ff !important;
+}
+
+/* Badge/Pill styling for light mode */
+.light .rounded-full {
+  background: #ffffff;
+  border: 1px solid #e5e5e5 !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.light .text-slate-500 {
+  color: #525252 !important;
+}
+
+/* ============================================
+   LIGHT MODE - Premium Clean Design
+   ============================================ */
+
+/* Remove pattern overlay */
+.light body::before {
+  display: none;
+}
+
+/* Clean glass effect for light mode */
+.light .glass {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Premium shadows for light mode */
+.light .card-glow {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.06),
+    0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.light .card-glow:hover {
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.08),
+    0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+  border-color: #0066ff;
+}
+
+/* Button styles for light mode */
+.light button:not(.theme-toggle):hover,
+.light .btn:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient accent for light mode */
+.light .gradient-text {
+  background: linear-gradient(
+    135deg,
+    #0066ff 0%,
+    #00a3cc 50%,
+    #6366f1 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient 8s ease infinite;
+}
+
+/* Force all backgrounds in light mode */
+.light .bg-slate-900,
+.light .bg-slate-800 {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+}
+
+.light .bg-slate-50 {
+  background: #f9f9f9 !important;
+}
+
+.light .border-slate-200,
+.light .border-slate-300 {
+  border-color: #e5e5e5 !important;
+}
+
+/* Input styles for light mode */
+.light input,
+.light textarea,
+.light select {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+  border: 1px solid #e5e5e5 !important;
+}
+
+.light input::placeholder,
+.light textarea::placeholder {
+  color: #737373 !important;
+}
+
+/* ============================================
+   VIDEO & IFRAME FIXES
+   ============================================ */
+
+/* Fix YouTube & Google Maps iframe in light mode */
+.light iframe {
+  background: #f5f5f5;
+  border: 1px solid #e5e5e5;
+}
+
+.light .aspect-video {
+  background: #f5f5f5 !important;
+}
+
+/* Video container in light mode */
+.light .bg-slate-950,
+.light .bg-slate-900 {
+  background: #ffffff !important;
+}
+
+.light .border-slate-800,
+.light .border-slate-700 {
+  border-color: #e5e5e5 !important;
+}
+
+/* Video info bar light mode */
+.light .from-slate-900\/95,
+.light .to-slate-800\/95 {
+  background: linear-gradient(to right, rgba(249, 250, 251, 0.95), rgba(255, 255, 255, 0.95)) !important;
+}
+
+/* Override all slate text colors in light mode */
+.light .text-slate-400 {
+  color: #525252 !important;
+}
+
+.light .text-white:not(.gradient-text):not(.bg-gradient-to-r *) {
+  color: #0a0a0a !important;
+}
+
+/* Auth pages light mode - comprehensive overrides */
+.light .bg-slate-50,
+.light .bg-slate-100 {
+  background: #f8fafc !important;
+}
+
+.light .border-slate-200,
+.light .border-slate-300 {
+  border-color: #d1d5db !important;
+}
+
+.light .text-slate-500 {
+  color: #6b7280 !important;
+}
+
+.light .text-slate-600 {
+  color: #4b5563 !important;
+}
+
+.light .text-slate-700 {
+  color: #374151 !important;
+}
+
+.light .text-slate-900 {
+  color: #0a0a0a !important;
+}
+
+.light .placeholder-slate-400::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Light mode dividers */
+.light .bg-slate-700 {
+  background: #d1d5db !important;
+}
+
+/* FORCE LIGHT MODE - Footer and Auth Pages */
+html.light footer {
+  background: linear-gradient(to bottom, #ffffff, #f8fafc) !important;
+  border-color: #e5e7eb !important;
+}
+
+html.light footer *:not(svg):not(path) {
+  color: #374151 !important;
+}
+
+html.light footer .text-white,
+html.light footer .text-slate-400 {
+  color: #6b7280 !important;
+}
+
+html.light footer a:hover {
+  color: #0066ff !important;
+}
+
+html.light footer .bg-white\/5 {
+  background: rgba(148, 163, 184, 0.1) !important;
+}
+
+html.light footer .border-white\/10 {
+  border-color: rgba(148, 163, 184, 0.3) !important;
+}
+
+/* Auth pages background - FORCE */
+html.light body,
+html.light #__next,
+html.light main {
+  background: #ffffff !important;
+}
+
+html.light .min-h-screen:not(main):not(body) {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%) !important;
+}
+
+html.light .bg-gradient-to-br {
+  background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%) !important;
+}
+
+html.light .bg-white,
+html.light .bg-slate-900 {
+  background: #ffffff !important;
+  color: #0a0a0a !important;
+}
+
+html.light input,
+html.light textarea {
+  background: #f8fafc !important;
+  color: #0a0a0a !important;
+  border-color: #d1d5db !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #9ca3af !important;
+}
+
+html.light label {
+  color: #374151 !important;
+}
+
+html.light h1,
+html.light h2,
+html.light h3,
+html.light h4,
+html.light h5,
+html.light h6 {
+  color: #0a0a0a !important;
+}
+
+html.light p {
+  color: #374151 !important;
+}
+
+html.light .text-slate-600,
+html.light .text-slate-700 {
+  color: #4b5563 !important;
+}
+
+html.light .border-slate-800,
+html.light .border-slate-700 {
+  border-color: #e5e7eb !important;
 }

@@ -38,9 +38,9 @@ export default function VideoContainer({
         <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 rounded-3xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500" />
 
         {/* Main Video Container */}
-        <div className="relative bg-slate-900 dark:bg-slate-950 blue:bg-slate-900 rounded-2xl overflow-hidden shadow-2xl border border-slate-800 dark:border-slate-700 blue:border-slate-700">
+        <div className="relative bg-slate-900 dark:bg-slate-950 blue:bg-slate-900 light:bg-white rounded-2xl overflow-hidden shadow-2xl border border-slate-800 dark:border-slate-700 blue:border-slate-700 light:border-slate-200">
           {/* Video Wrapper with 16:9 aspect ratio */}
-          <div className="relative aspect-video bg-slate-950 dark:bg-black blue:bg-slate-950">
+          <div className="relative aspect-video bg-slate-950 dark:bg-black blue:bg-slate-950 light:bg-slate-100">
             {/* Placeholder/Thumbnail */}
             {thumbnailUrl && !isPlaying && (
               <motion.div
@@ -91,13 +91,13 @@ export default function VideoContainer({
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
-              className="p-6 bg-gradient-to-r from-slate-900/95 to-slate-800/95 backdrop-blur-sm"
+              className="p-6 bg-gradient-to-r from-slate-900/95 to-slate-800/95 dark:from-slate-900/95 dark:to-slate-800/95 blue:from-slate-900/95 blue:to-slate-800/95 light:from-slate-50 light:to-white backdrop-blur-sm"
             >
               {title && (
-                <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+                <h3 className="text-xl font-bold text-white dark:text-white blue:text-white light:text-slate-900 mb-2">{title}</h3>
               )}
               {subtitle && (
-                <p className="text-slate-400 text-sm">{subtitle}</p>
+                <p className="text-slate-400 dark:text-slate-400 blue:text-slate-400 light:text-slate-600 text-sm">{subtitle}</p>
               )}
             </motion.div>
           )}
