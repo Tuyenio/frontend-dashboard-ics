@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   LogOut, User, Mail, Shield, Calendar,
-  BarChart3, TrendingUp, Activity, Settings
+  BarChart3, TrendingUp, Activity, Settings, CheckCircle, X
 } from 'lucide-react';
 import Image from 'next/image';
+import { API_BASE_URL, API_ENDPOINTS } from '@/constants/api';
 
 interface UserData {
   id: string;
@@ -21,8 +22,21 @@ interface UserData {
 
 export default function UserDashboard() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [user, setUser] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+
+  useEffect(() => {
+    // Kiểm tra nếu có thông báo đăng nhập thành công
+    if (searchParams.get('loginSuccess') === 'true') {
+      setShowSuccessMessage(true);
+      // Tự động ẩn thông báo sau 5 giây
+      setTimeout(() => setShowSuccessMessage(false), 5000);
+      // Xóa query param khỏi URL
+      router.replace('/user');
+    }
+  }, [searchParams, router]);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -34,7 +48,7 @@ export default function UserDashboard() {
       }
 
       try {
-        const response = await fetch('http://localhost:5000/auth/me', {
+        const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.AUTH.ME}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           },
@@ -136,6 +150,34 @@ export default function UserDashboard() {
           </div>
         </div>
       </header>
+
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          className="container mx-auto px-6 py-4"
+        >
+          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center gap-3">
+            <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-green-800 dark:text-green-300">
+                Đăng nhập thành công!
+              </h3>
+              <p className="text-green-700 dark:text-green-400 text-sm">
+                Chào mừng bạn đến với dashboard cá nhân. Bạn đã đăng nhập thành công bằng Google.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowSuccessMessage(false)}
+              className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </motion.div>
+      )}
 
       {/* Main Content */}
       <main className="container mx-auto px-6 py-8">
