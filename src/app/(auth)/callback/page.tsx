@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
-export default function AuthCallbackPage() {
+function CallbackContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const token = searchParams.get('token');
@@ -42,12 +44,24 @@ export default function AuthCallbackPage() {
           <div className="absolute inset-0 rounded-full border-4 border-blue-600 border-t-transparent animate-spin"></div>
         </div>
         <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
-          Đang xử lý đăng nhập...
+          {t('auth.callback.processing')}
         </h2>
         <p className="text-slate-600 dark:text-slate-400">
-          Vui lòng đợi trong giây lát, chúng tôi đang chuyển hướng bạn đến dashboard.
+          {t('auth.callback.redirecting')}
         </p>
       </div>
     </div>
+  );
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    }>
+      <CallbackContent />
+    </Suspense>
   );
 }

@@ -6,9 +6,11 @@ import { Mail, Lock, Eye, EyeOff, User, ArrowLeft, Chrome } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function RegisterPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,19 +34,25 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.email || !formData.fullName || !formData.password || !formData.confirmPassword) {
+      setError(t('auth.register.errors.fillAllFields'));
+      return;
+    }
+    
     setIsLoading(true);
     setError('');
     setSuccess('');
 
     // Validation
     if (formData.password !== formData.confirmPassword) {
-      setError('Mật khẩu xác nhận không khớp');
+      setError(t('auth.register.errors.passwordMismatch'));
       setIsLoading(false);
       return;
     }
 
     if (formData.password.length < 8) {
-      setError('Mật khẩu phải có ít nhất 8 ký tự');
+      setError(t('auth.register.errors.weakPassword'));
       setIsLoading(false);
       return;
     }
@@ -65,15 +73,15 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setSuccess('Đăng ký thành công! Đang chuyển đến trang đăng nhập...');
+        setSuccess(t('auth.register.success'));
         setTimeout(() => {
           router.push('/login');
         }, 2000);
       } else {
-        setError(data.message || 'Đăng ký thất bại');
+        setError(data.message || t('auth.register.errors.serverError'));
       }
     } catch (err) {
-      setError('Không thể kết nối đến server. Vui lòng thử lại sau.');
+      setError(t('auth.register.errors.serverError'));
       console.error('Register error:', err);
     } finally {
       setIsLoading(false);
@@ -95,7 +103,7 @@ export default function RegisterPage() {
         className="absolute top-6 left-6 flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors z-10"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span className="font-medium">Quay lại trang chủ</span>
+        <span className="font-medium">{t('auth.common.backToHome')}</span>
       </Link>
 
       {/* Register Card */}
@@ -116,10 +124,10 @@ export default function RegisterPage() {
               <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
             </div>
             <h1 className="text-base font-black text-slate-900 dark:text-white mb-1">
-              Đăng ký
+              {t('auth.register.title')}
             </h1>
             <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
-              Tạo tài khoản mới để bắt đầu sử dụng ICS Dashboard
+              {t('auth.register.subtitle')}
             </p>
           </div>
 
@@ -150,7 +158,7 @@ export default function RegisterPage() {
             {/* Full Name Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Họ và tên
+                {t('auth.register.fullName')}
               </label>
               <div className="relative">
                 <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -160,7 +168,7 @@ export default function RegisterPage() {
                   value={formData.fullName}
                   onChange={handleChange}
                   required
-                  placeholder="Nguyễn Văn A"
+                  placeholder={t('auth.register.fullNamePlaceholder')}
                   className="w-full pl-12 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
@@ -169,7 +177,7 @@ export default function RegisterPage() {
             {/* Email Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Email
+                {t('auth.register.email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -179,7 +187,7 @@ export default function RegisterPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="email@example.com"
+                  placeholder={t('auth.common.emailPlaceholder')}
                   className="w-full pl-12 pr-4 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
@@ -188,7 +196,7 @@ export default function RegisterPage() {
             {/* Password Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Mật khẩu
+                {t('auth.register.password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -198,7 +206,7 @@ export default function RegisterPage() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  placeholder="Tối thiểu 8 ký tự"
+                  placeholder={t('auth.common.passwordPlaceholder')}
                   className="w-full pl-12 pr-12 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
@@ -214,7 +222,7 @@ export default function RegisterPage() {
             {/* Confirm Password Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Xác nhận mật khẩu
+                {t('auth.register.confirmPassword')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -224,7 +232,7 @@ export default function RegisterPage() {
                   value={formData.confirmPassword}
                   onChange={handleChange}
                   required
-                  placeholder="Nhập lại mật khẩu"
+                  placeholder={t('auth.register.confirmPasswordPlaceholder')}
                   className="w-full pl-12 pr-12 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
@@ -249,7 +257,7 @@ export default function RegisterPage() {
                   <span>Đang xử lý...</span>
                 </>
               ) : (
-                <span>Đăng ký</span>
+                <span>{t('auth.register.submit')}</span>
               )}
             </button>
           </form>
@@ -257,7 +265,7 @@ export default function RegisterPage() {
           {/* Divider */}
           <div className="my-4 flex items-center gap-4">
             <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
-            <span className="text-sm text-slate-500 dark:text-slate-400">Hoặc</span>
+            <span className="text-sm text-slate-500 dark:text-slate-400">{t('auth.common.or')}</span>
             <div className="flex-1 h-px bg-slate-200 dark:bg-slate-700"></div>
           </div>
 
@@ -268,18 +276,18 @@ export default function RegisterPage() {
             className="w-full py-3 bg-white light:bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl flex items-center justify-center gap-3 shadow-md"
           >
             <Chrome className="w-5 h-5 text-blue-600" />
-            <span className="font-semibold">Đăng ký với Google</span>
+            <span className="font-semibold">{t('auth.common.googleRegister')}</span>
           </button>
 
           {/* Login Link */}
           <div className="mt-4 text-center">
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Đã có tài khoản?{' '}
+              {t('auth.register.hasAccount')}{' '}
               <Link
                 href="/login"
                 className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
               >
-                Đăng nhập ngay
+                {t('auth.register.login')}
               </Link>
             </p>
           </div>

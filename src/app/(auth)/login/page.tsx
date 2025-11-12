@@ -6,9 +6,11 @@ import { Mail, Lock, Eye, EyeOff, LogIn, ArrowLeft, Chrome } from 'lucide-react'
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function LoginPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -28,6 +30,12 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!formData.email || !formData.password) {
+      setError(t('auth.login.errors.fillAllFields'));
+      return;
+    }
+    
     setIsLoading(true);
     setError('');
 
@@ -54,10 +62,10 @@ export default function LoginPage() {
           router.push('/user');
         }
       } else {
-        setError(data.message || 'Đăng nhập thất bại');
+        setError(data.message || t('auth.login.errors.invalidCredentials'));
       }
     } catch (err) {
-      setError('Không thể kết nối đến server. Vui lòng thử lại sau.');
+      setError(t('auth.login.errors.serverError'));
       console.error('Login error:', err);
     } finally {
       setIsLoading(false);
@@ -79,7 +87,7 @@ export default function LoginPage() {
         className="absolute top-6 left-6 flex items-center gap-2 text-slate-600 light:text-slate-700 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors z-10"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span className="font-medium">Quay lại trang chủ</span>
+        <span className="font-medium">{t('auth.common.backToHome')}</span>
       </Link>
 
       {/* Login Card */}
@@ -100,10 +108,10 @@ export default function LoginPage() {
               <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
             </div>
             <h1 className="text-base font-black text-slate-900 light:text-slate-900 dark:text-white mb-1">
-              Đăng nhập
+              {t('auth.login.title')}
             </h1>
             <p className="text-xs text-slate-600 light:text-slate-600 dark:text-slate-400 text-center">
-              Chào mừng trở lại! Vui lòng đăng nhập để tiếp tục.
+              {t('auth.login.subtitle')}
             </p>
           </div>
 
@@ -123,7 +131,7 @@ export default function LoginPage() {
             {/* Email Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 light:text-slate-700 dark:text-slate-300 mb-1">
-                Email
+                {t('auth.login.email')}
               </label>
               <div className="relative">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 light:text-slate-500" />
@@ -133,7 +141,7 @@ export default function LoginPage() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  placeholder="email@example.com"
+                  placeholder={t('auth.common.emailPlaceholder')}
                   className="w-full pl-12 pr-4 py-2 bg-slate-50 light:bg-slate-100 dark:bg-slate-800 border border-slate-200 light:border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 light:text-slate-900 dark:text-white placeholder-slate-400 light:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
               </div>
@@ -142,7 +150,7 @@ export default function LoginPage() {
             {/* Password Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 light:text-slate-700 dark:text-slate-300 mb-1">
-                Mật khẩu
+                {t('auth.login.password')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 light:text-slate-500" />
@@ -152,7 +160,7 @@ export default function LoginPage() {
                   value={formData.password}
                   onChange={handleChange}
                   required
-                  placeholder="••••••••"
+                  placeholder={t('auth.common.passwordPlaceholder')}
                   className="w-full pl-12 pr-12 py-2 bg-slate-50 light:bg-slate-100 dark:bg-slate-800 border border-slate-200 light:border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 light:text-slate-900 dark:text-white placeholder-slate-400 light:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
@@ -171,7 +179,7 @@ export default function LoginPage() {
                 href="/forgot-password"
                 className="text-sm text-blue-600 light:text-blue-600 dark:text-blue-400 hover:underline"
               >
-                Quên mật khẩu?
+                {t('auth.login.forgotPassword')}
               </Link>
             </div>
 
@@ -189,7 +197,7 @@ export default function LoginPage() {
               ) : (
                 <>
                   <LogIn className="w-5 h-5" />
-                  <span>Đăng nhập</span>
+                  <span>{t('auth.login.submit')}</span>
                 </>
               )}
             </button>
@@ -198,7 +206,7 @@ export default function LoginPage() {
           {/* Divider */}
           <div className="my-4 flex items-center gap-4">
             <div className="flex-1 h-px bg-slate-200 light:bg-slate-300 dark:bg-slate-700"></div>
-            <span className="text-xs text-slate-500 light:text-slate-600 dark:text-slate-400">Hoặc</span>
+            <span className="text-xs text-slate-500 light:text-slate-600 dark:text-slate-400">{t('auth.common.or')}</span>
             <div className="flex-1 h-px bg-slate-200 light:bg-slate-300 dark:bg-slate-700"></div>
           </div>
 
@@ -209,18 +217,18 @@ export default function LoginPage() {
             className="w-full py-2 bg-white light:bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-400 dark:hover:border-slate-500 text-slate-800 dark:text-slate-200 font-bold rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-xl flex items-center justify-center gap-3 shadow-md"
           >
             <Chrome className="w-5 h-5 text-blue-600" />
-            <span className="font-semibold">Đăng nhập với Google</span>
+            <span className="font-semibold">{t('auth.common.googleLogin')}</span>
           </button>
 
           {/* Register Link */}
           <div className="mt-4 text-center">
             <p className="text-xs text-slate-600 light:text-slate-600 dark:text-slate-400">
-              Chưa có tài khoản?{' '}
+              {t('auth.login.noAccount')}{' '}
               <Link
                 href="/register"
                 className="text-blue-600 light:text-blue-600 dark:text-blue-400 font-semibold hover:underline"
               >
-                Đăng ký ngay
+                {t('auth.login.register')}
               </Link>
             </p>
           </div>

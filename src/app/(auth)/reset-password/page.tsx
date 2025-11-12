@@ -6,11 +6,13 @@ import { Lock, Eye, EyeOff, ArrowLeft, CheckCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 function ResetPasswordForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
+  const { t } = useLanguage();
 
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -22,25 +24,25 @@ function ResetPasswordForm() {
 
   useEffect(() => {
     if (!token) {
-      setError('Link đặt lại mật khẩu không hợp lệ hoặc đã hết hạn.');
+      setError(t('auth.reset.errors.invalidToken'));
     }
-  }, [token]);
+  }, [token, t]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!token) {
-      setError('Link đặt lại mật khẩu không hợp lệ.');
+      setError(t('auth.reset.errors.invalidToken'));
       return;
     }
 
     if (password.length < 8) {
-      setError('Mật khẩu phải có ít nhất 8 ký tự.');
+      setError(t('auth.reset.errors.weakPassword'));
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Mật khẩu xác nhận không khớp.');
+      setError(t('auth.reset.errors.passwordMismatch'));
       return;
     }
 
@@ -67,10 +69,10 @@ function ResetPasswordForm() {
           router.push('/login');
         }, 3000);
       } else {
-        setError(data.message || 'Có lỗi xảy ra. Vui lòng thử lại.');
+        setError(data.message || t('auth.reset.errors.serverError'));
       }
     } catch (err) {
-      setError('Không thể kết nối đến server. Vui lòng thử lại sau.');
+      setError(t('auth.reset.errors.serverError'));
       console.error('Reset password error:', err);
     } finally {
       setIsLoading(false);
@@ -93,15 +95,15 @@ function ResetPasswordForm() {
             </div>
             
             <h1 className="text-3xl font-black text-slate-900 dark:text-white mb-4">
-              Thành công!
+              {t('auth.reset.successTitle')}
             </h1>
             
             <p className="text-slate-600 dark:text-slate-400 mb-6">
-              Mật khẩu của bạn đã được đặt lại thành công.
+              {t('auth.reset.successMessage')}
             </p>
             
             <p className="text-sm text-slate-500 dark:text-slate-500">
-              Đang chuyển hướng đến trang đăng nhập...
+              {t('auth.reset.redirecting')}
             </p>
           </div>
         </motion.div>
@@ -120,7 +122,7 @@ function ResetPasswordForm() {
         className="absolute top-6 left-6 flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors z-10"
       >
         <ArrowLeft className="w-5 h-5" />
-        <span className="font-medium">Quay lại đăng nhập</span>
+        <span className="font-medium">{t('auth.forgot.backToLogin')}</span>
       </Link>
 
       {/* Reset Password Card */}
@@ -141,10 +143,10 @@ function ResetPasswordForm() {
               <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
             </div>
             <h1 className="text-sm font-black text-slate-900 dark:text-white mb-1 whitespace-nowrap">
-              Đặt lại mật khẩu
+              {t('auth.reset.title')}
             </h1>
             <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
-              Nhập mật khẩu mới của bạn
+              {t('auth.reset.subtitle')}
             </p>
           </div>
 
@@ -164,7 +166,7 @@ function ResetPasswordForm() {
             {/* Password Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Mật khẩu mới
+                {t('auth.reset.newPassword')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -174,7 +176,7 @@ function ResetPasswordForm() {
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   minLength={8}
-                  placeholder="••••••••"
+                  placeholder={t('auth.common.passwordPlaceholder')}
                   className="w-full pl-12 pr-12 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
@@ -186,14 +188,14 @@ function ResetPasswordForm() {
                 </button>
               </div>
               <p className="mt-1 text-xs text-slate-500 dark:text-slate-500">
-                Tối thiểu 8 ký tự
+                {t('auth.reset.hint')}
               </p>
             </div>
 
             {/* Confirm Password Input */}
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Xác nhận mật khẩu
+                {t('auth.reset.confirmPassword')}
               </label>
               <div className="relative">
                 <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
@@ -203,7 +205,7 @@ function ResetPasswordForm() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   required
                   minLength={8}
-                  placeholder="••••••••"
+                  placeholder={t('auth.reset.confirmPasswordPlaceholder')}
                   className="w-full pl-12 pr-12 py-2 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                 />
                 <button
@@ -230,7 +232,7 @@ function ResetPasswordForm() {
               ) : (
                 <>
                   <Lock className="w-5 h-5" />
-                  <span>Đặt lại mật khẩu</span>
+                  <span>{t('auth.reset.submit')}</span>
                 </>
               )}
             </button>
@@ -239,12 +241,12 @@ function ResetPasswordForm() {
           {/* Back to Login Link */}
           <div className="mt-4 text-center">
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Nhớ mật khẩu rồi?{' '}
+              {t('auth.register.hasAccount')}{' '}
               <Link
                 href="/login"
                 className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
               >
-                Đăng nhập ngay
+                {t('auth.register.login')}
               </Link>
             </p>
           </div>

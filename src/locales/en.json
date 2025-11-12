@@ -104,5 +104,89 @@
     "scrollToTop": "Back to top",
     "loading": "Loading...",
     "error": "An error occurred"
+  },
+  "auth": {
+    "common": {
+      "or": "Or",
+      "backToHome": "Back to home",
+      "googleLogin": "Sign in with Google",
+      "googleRegister": "Sign up with Google",
+      "emailPlaceholder": "your@email.com",
+      "passwordPlaceholder": "Enter password"
+    },
+    "login": {
+      "title": "Sign In",
+      "subtitle": "Welcome back! Please sign in to your account.",
+      "email": "Email",
+      "password": "Password",
+      "forgotPassword": "Forgot password?",
+      "submit": "Sign In",
+      "noAccount": "Don't have an account?",
+      "register": "Sign up now",
+      "errors": {
+        "invalidCredentials": "Invalid email or password",
+        "serverError": "Server error, please try again later",
+        "fillAllFields": "Please fill in all fields"
+      }
+    },
+    "register": {
+      "title": "Sign Up",
+      "subtitle": "Create a new account to experience our services.",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "John Doe",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Re-enter password",
+      "submit": "Sign Up",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in now",
+      "errors": {
+        "passwordMismatch": "Passwords do not match",
+        "emailExists": "Email already registered",
+        "serverError": "Server error, please try again later",
+        "fillAllFields": "Please fill in all fields",
+        "weakPassword": "Password must be at least 8 characters"
+      },
+      "success": "Registration successful! Redirecting to login page..."
+    },
+    "forgot": {
+      "title": "Forgot Password?",
+      "subtitle": "Enter your email to receive a password reset link.",
+      "email": "Email",
+      "submit": "Send Reset Link",
+      "backToLogin": "Back to login",
+      "success": "Password reset link has been sent to your email!",
+      "errors": {
+        "emailNotFound": "Email not found in system",
+        "serverError": "Server error, please try again later",
+        "fillEmail": "Please enter your email"
+      }
+    },
+    "reset": {
+      "title": "Reset Password",
+      "subtitle": "Enter a new password for your account.",
+      "newPassword": "New Password",
+      "newPasswordPlaceholder": "Enter new password",
+      "confirmPassword": "Confirm Password",
+      "confirmPasswordPlaceholder": "Re-enter new password",
+      "submit": "Reset Password",
+      "hint": "Password must be at least 8 characters",
+      "success": "Password reset successful! Redirecting to login page...",
+      "successTitle": "Success!",
+      "successMessage": "Your password has been reset successfully.",
+      "redirecting": "Redirecting to login page...",
+      "errors": {
+        "passwordMismatch": "Passwords do not match",
+        "weakPassword": "Password must be at least 8 characters",
+        "invalidToken": "Invalid or expired link",
+        "serverError": "Server error, please try again later",
+        "fillAllFields": "Please fill in all fields"
+      }
+    },
+    "callback": {
+      "processing": "Processing login...",
+      "redirecting": "Please wait a moment, we are redirecting you to the dashboard."
+    }
   }
 }

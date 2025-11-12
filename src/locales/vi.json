@@ -104,5 +104,89 @@
     "scrollToTop": "Lên đầu trang",
     "loading": "Đang tải...",
     "error": "Có lỗi xảy ra"
+  },
+  "auth": {
+    "common": {
+      "or": "Hoặc",
+      "backToHome": "Quay lại trang chủ",
+      "googleLogin": "Đăng nhập bằng Google",
+      "googleRegister": "Đăng ký bằng Google",
+      "emailPlaceholder": "your@email.com",
+      "passwordPlaceholder": "Nhập mật khẩu"
+    },
+    "login": {
+      "title": "Đăng nhập",
+      "subtitle": "Chào mừng trở lại! Vui lòng đăng nhập vào tài khoản của bạn.",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "forgotPassword": "Quên mật khẩu?",
+      "submit": "Đăng nhập",
+      "noAccount": "Chưa có tài khoản?",
+      "register": "Đăng ký ngay",
+      "errors": {
+        "invalidCredentials": "Email hoặc mật khẩu không đúng",
+        "serverError": "Lỗi server, vui lòng thử lại sau",
+        "fillAllFields": "Vui lòng điền đầy đủ thông tin"
+      }
+    },
+    "register": {
+      "title": "Đăng ký",
+      "subtitle": "Tạo tài khoản mới để trải nghiệm dịch vụ của chúng tôi.",
+      "fullName": "Họ và tên",
+      "fullNamePlaceholder": "Nguyễn Văn A",
+      "email": "Email",
+      "password": "Mật khẩu",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "confirmPasswordPlaceholder": "Nhập lại mật khẩu",
+      "submit": "Đăng ký",
+      "hasAccount": "Đã có tài khoản?",
+      "login": "Đăng nhập ngay",
+      "errors": {
+        "passwordMismatch": "Mật khẩu xác nhận không khớp",
+        "emailExists": "Email đã được đăng ký",
+        "serverError": "Lỗi server, vui lòng thử lại sau",
+        "fillAllFields": "Vui lòng điền đầy đủ thông tin",
+        "weakPassword": "Mật khẩu phải có ít nhất 8 ký tự"
+      },
+      "success": "Đăng ký thành công! Chuyển hướng đến trang đăng nhập..."
+    },
+    "forgot": {
+      "title": "Quên mật khẩu?",
+      "subtitle": "Nhập email của bạn để nhận liên kết đặt lại mật khẩu.",
+      "email": "Email",
+      "submit": "Gửi liên kết đặt lại",
+      "backToLogin": "Quay lại đăng nhập",
+      "success": "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn!",
+      "errors": {
+        "emailNotFound": "Email không tồn tại trong hệ thống",
+        "serverError": "Lỗi server, vui lòng thử lại sau",
+        "fillEmail": "Vui lòng nhập email"
+      }
+    },
+    "reset": {
+      "title": "Đặt lại mật khẩu",
+      "subtitle": "Nhập mật khẩu mới cho tài khoản của bạn.",
+      "newPassword": "Mật khẩu mới",
+      "newPasswordPlaceholder": "Nhập mật khẩu mới",
+      "confirmPassword": "Xác nhận mật khẩu",
+      "confirmPasswordPlaceholder": "Nhập lại mật khẩu mới",
+      "submit": "Đặt lại mật khẩu",
+      "hint": "Mật khẩu phải có ít nhất 8 ký tự",
+      "success": "Đặt lại mật khẩu thành công! Chuyển hướng đến trang đăng nhập...",
+      "successTitle": "Thành công!",
+      "successMessage": "Mật khẩu của bạn đã được đặt lại thành công.",
+      "redirecting": "Đang chuyển hướng đến trang đăng nhập...",
+      "errors": {
+        "passwordMismatch": "Mật khẩu xác nhận không khớp",
+        "weakPassword": "Mật khẩu phải có ít nhất 8 ký tự",
+        "invalidToken": "Liên kết không hợp lệ hoặc đã hết hạn",
+        "serverError": "Lỗi server, vui lòng thử lại sau",
+        "fillAllFields": "Vui lòng điền đầy đủ thông tin"
+      }
+    },
+    "callback": {
+      "processing": "Đang xử lý đăng nhập...",
+      "redirecting": "Vui lòng đợi trong giây lát, chúng tôi đang chuyển hướng bạn đến dashboard."
+    }
   }
 }
