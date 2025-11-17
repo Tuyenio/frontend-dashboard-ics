@@ -67,24 +67,6 @@ export default function UserDashboard() {
       category: 'Getting Started Tutorial', 
       lastModified: '10/29/2025 01:43 AM',
       starred: false
-    },
-    {
-      id: 4,
-      name: 'Google Ads Performance Dashboard',
-      description: 'Track and analyze Google Ads campaign performance.',
-      author: 'System Admin',
-      category: 'Getting Started Tutorial', 
-      lastModified: '10/29/2025 01:43 AM',
-      starred: false
-    },
-    {
-      id: 5,
-      name: 'Supply Chain Performance Dashboard',
-      description: 'Monitor supply chain metrics and KPIs.',
-      author: 'System Admin',
-      category: 'Getting Started Tutorial', 
-      lastModified: '10/29/2025 01:43 AM',
-      starred: false
     }
   ];
 
@@ -159,24 +141,24 @@ export default function UserDashboard() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex font-['Inter',system-ui,sans-serif]">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex">
       {/* Sidebar */}
       <motion.div
         initial={{ width: sidebarCollapsed ? 80 : 280 }}
         animate={{ width: sidebarCollapsed ? 80 : 280 }}
         transition={{ duration: 0.3 }}
-        className="bg-white dark:bg-slate-900 backdrop-blur-lg border-r border-gray-100 dark:border-slate-800 flex flex-col shadow-sm"
+        className="bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col"
       >
         {/* Logo & Toggle */}
-        <div className="p-6 flex items-center justify-between border-b border-gray-100 dark:border-slate-800">
+        <div className="p-6 flex items-center justify-between border-b border-slate-200 dark:border-slate-700">
           {!sidebarCollapsed && (
-            <div className="flex flex-col items-center gap-3 w-full">
-              <div className="relative w-16 h-16">
+            <div className="flex items-center gap-3">
+              <div className="relative w-10 h-10">
                 <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
               </div>
-              <div className="text-center">
-                <h1 className="font-bold text-xl text-gray-900 dark:text-white">ICS</h1>
-                <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">Dashboard</p>
+              <div>
+                <h1 className="font-bold text-lg text-slate-900 dark:text-white">ICS</h1>
+                <p className="text-xs text-slate-500">Dashboard</p>
               </div>
             </div>
           )}
@@ -187,27 +169,19 @@ export default function UserDashboard() {
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2.5 rounded-xl hover:bg-gray-100 hover:scale-110 dark:hover:bg-slate-800 transition-all duration-300 absolute top-4 right-4"
+            className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
           >
             {sidebarCollapsed ? (
-              <ChevronRight className="w-4 h-4 text-gray-600 dark:text-slate-300" />
+              <ChevronRight className="w-4 h-4 text-slate-600 dark:text-slate-300" />
             ) : (
-              <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-slate-300" />
+              <ChevronLeft className="w-4 h-4 text-slate-600 dark:text-slate-300" />
             )}
-          </button>
-        </div>
-
-        {/* Create New Dashboard Button */}
-        <div className="p-4">
-          <button className={`w-full flex items-center gap-3 px-4 py-3.5 bg-gradient-to-r from-sky-400 to-cyan-500 dark:from-sky-500 dark:to-cyan-600 text-white rounded-2xl hover:from-sky-500 hover:to-cyan-600 dark:hover:from-sky-400 dark:hover:to-cyan-500 hover:shadow-lg hover:shadow-sky-500/25 transform hover:scale-105 transition-all duration-300 font-semibold ${sidebarCollapsed ? 'justify-center' : ''}`}>
-            <Plus className="w-5 h-5" />
-            {!sidebarCollapsed && <span>Tạo Dashboard Mới</span>}
           </button>
         </div>
 
         {/* Navigation */}
         <nav className="flex-1 p-4">
-          <div className="space-y-1">
+          <div className="space-y-2">
             <SidebarItem icon={Home} label="Dashboards" active collapsed={sidebarCollapsed} />
             <SidebarItem icon={FolderOpen} label="Data Sources" collapsed={sidebarCollapsed} />
             <SidebarItem icon={Star} label="Starred" collapsed={sidebarCollapsed} />
@@ -217,16 +191,16 @@ export default function UserDashboard() {
         </nav>
 
         {/* User Info */}
-        <div className="p-4 border-t border-gray-100 dark:border-slate-800">
+        <div className="p-4 border-t border-slate-200 dark:border-slate-700">
           {!sidebarCollapsed && (
-            <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-slate-300 font-medium">
+            <div className="flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400">
               <User className="w-4 h-4" />
               <span>Signed in as {user.role}</span>
             </div>
           )}
           {sidebarCollapsed && (
             <div className="flex justify-center">
-              <User className="w-5 h-5 text-gray-600 dark:text-slate-300" />
+              <User className="w-5 h-5 text-slate-600 dark:text-slate-400" />
             </div>
           )}
         </div>
@@ -235,29 +209,29 @@ export default function UserDashboard() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="bg-white dark:bg-slate-900 backdrop-blur-lg border-b border-gray-100 dark:border-slate-800 px-6 py-5 shadow-sm">
+        <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">All Dashboards (5 dashboards)</h1>
+              <h1 className="text-2xl font-bold text-slate-900 dark:text-white">All Dashboards (5 dashboards)</h1>
             </div>
             
             {/* Header Actions */}
             <div className="flex items-center gap-4">
               {/* Search */}
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search dashboards"
-                  className="pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-slate-800 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white w-72 font-medium transition-all duration-200"
+                  className="pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-700 border-0 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 w-64"
                 />
               </div>
 
               {/* Quick Actions */}
-              <button className="px-4 py-2.5 bg-gradient-to-r from-sky-400 to-cyan-500 text-white rounded-2xl text-sm font-semibold hover:from-sky-500 hover:to-cyan-600 hover:shadow-lg hover:shadow-sky-500/25 hover:scale-105 transition-all duration-300">
+              <button className="px-4 py-2 bg-blue-600 text-white rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
                 Free Tier
               </button>
-              <button className="px-4 py-2.5 border border-gray-200 text-gray-600 bg-white rounded-2xl text-sm font-medium hover:bg-sky-50 hover:border-sky-200 hover:text-sky-600 hover:scale-105 transition-all duration-200">
+              <button className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                 Quick Tour
               </button>
 
@@ -374,27 +348,11 @@ export default function UserDashboard() {
           </div>
 
           {/* Recent Section */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">Recent</h2>
-              <button className="text-sm text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-semibold transition-colors">
-                View All
-              </button>
-            </div>
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-4">Recent</h2>
             
-            {/* Dashboard Cards Grid with Create New Card */}
-            <div className="grid grid-cols-6 gap-5">
-              {/* Create New Dashboard Card */}
-              <div className="bg-white p-6 rounded-2xl border-2 border-dashed border-gray-200 hover:border-sky-300 hover:bg-sky-50 hover:scale-105 transition-all duration-200 cursor-pointer group">
-                <div className="h-32 flex flex-col items-center justify-center text-gray-500 dark:text-slate-500 group-hover:text-sky-600 dark:group-hover:text-slate-300 transition-colors duration-200">
-                  <div className="w-14 h-14 rounded-full bg-gray-100 dark:bg-slate-800 group-hover:bg-sky-100 group-hover:scale-110 dark:group-hover:bg-slate-700 flex items-center justify-center mb-3 transition-all duration-200">
-                    <Plus className="w-7 h-7 text-gray-500 group-hover:text-sky-600 transition-colors duration-200" />
-                  </div>
-                  <span className="text-sm font-semibold">Tạo mới</span>
-                </div>
-              </div>
-              
-              {/* Existing Dashboard Cards */}
+            {/* Dashboard Cards Grid */}
+            <div className="grid grid-cols-5 gap-4 mb-8">
               {dashboards.slice(0, 5).map((dashboard) => (
                 <DashboardCard key={dashboard.id} dashboard={dashboard} />
               ))}
@@ -402,27 +360,26 @@ export default function UserDashboard() {
           </div>
 
           {/* All Dashboards Table */}
-          <div className="bg-white dark:bg-slate-900 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-gray-200 dark:border-slate-800">
+          <div className="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+            <div className="p-6 border-b border-slate-200 dark:border-slate-700">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">All Dashboards</h3>
                 <div className="flex items-center gap-4">
-                  <select className="px-4 py-2.5 bg-gray-50 dark:bg-slate-800 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white font-medium text-gray-900 dark:text-white">
+                  <select className="px-3 py-2 bg-slate-100 dark:bg-slate-700 border-0 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
                     <option>Modified - Descending</option>
                     <option>Name - Ascending</option>
                     <option>Created - Descending</option>
                   </select>
-                  <button className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 bg-white text-gray-600 rounded-2xl text-sm hover:bg-sky-50 hover:border-sky-200 hover:text-sky-600 hover:scale-105 transition-all duration-200 font-medium">
+                  <button className="flex items-center gap-2 px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
                     <Filter className="w-4 h-4" />
                     All
                   </button>
-                  <span className="text-sm text-gray-500 dark:text-slate-400 font-medium">1 - 5 of 5</span>
                 </div>
+                <span className="text-sm text-slate-500">1 - 5 of 5</span>
               </div>
             </div>
 
             {/* Table Content */}
-            <div className="divide-y divide-gray-200 dark:divide-slate-800">
+            <div className="divide-y divide-slate-200 dark:divide-slate-700">
               {dashboards.map((dashboard) => (
                 <DashboardTableRow key={dashboard.id} dashboard={dashboard} />
               ))}
@@ -430,6 +387,195 @@ export default function UserDashboard() {
           </div>
         </div>
       </div>
+    </div>
+  );
+      icon: TrendingUp, 
+      title: 'Theo dõi tiến độ', 
+      desc: 'Giám sát hoạt động và KPIs',
+      color: 'from-purple-500 to-pink-500'
+    },
+    { 
+      icon: Activity, 
+      title: 'Analytics', 
+      desc: 'Phân tích dữ liệu chi tiết',
+      color: 'from-green-500 to-emerald-500'
+    },
+    { 
+      icon: Settings, 
+      title: 'Cài đặt', 
+      desc: 'Quản lý thông tin cá nhân',
+      color: 'from-orange-500 to-red-500'
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-cyan-50 dark:from-black dark:via-slate-950 dark:to-black transition-colors duration-500">
+      {/* Header */}
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="relative w-10 h-10">
+                <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
+              </div>
+              <div>
+                <div className="text-xl font-black text-slate-900 dark:text-white">ICS User Dashboard</div>
+                <div className="text-xs text-slate-500 dark:text-slate-400">Trang cá nhân</div>
+              </div>
+            </div>
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+            >
+              <LogOut className="w-4 h-4" />
+              <span className="font-medium">Đăng xuất</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Success Message */}
+      {showSuccessMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -50 }}
+          className="container mx-auto px-6 py-4"
+        >
+          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center gap-3">
+            <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0" />
+            <div className="flex-1">
+              <h3 className="font-semibold text-green-800 dark:text-green-300">
+                Đăng nhập thành công!
+              </h3>
+              <p className="text-green-700 dark:text-green-400 text-sm">
+                Chào mừng bạn đến với dashboard cá nhân. Bạn đã đăng nhập thành công bằng Google.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowSuccessMessage(false)}
+              className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </motion.div>
+      )}
+
+      {/* Main Content */}
+      <main className="container mx-auto px-6 py-8">
+        {/* Welcome Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white mb-2">
+            Xin chào, {user.fullName}! 👋
+          </h1>
+          <p className="text-slate-600 dark:text-slate-400">
+            Chào mừng bạn trở lại. Đây là dashboard cá nhân của bạn.
+          </p>
+        </motion.div>
+
+        {/* User Info Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="mb-8"
+        >
+          <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
+            <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6">
+              Thông tin tài khoản
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                  <User className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">Họ và tên</div>
+                  <div className="text-lg font-semibold text-slate-900 dark:text-white">{user.fullName}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                  <Mail className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">Email</div>
+                  <div className="text-lg font-semibold text-slate-900 dark:text-white break-all">{user.email}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">Vai trò</div>
+                  <div className="text-lg font-semibold text-slate-900 dark:text-white">Người dùng</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+                <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                  <Calendar className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <div className="text-sm text-slate-500 dark:text-slate-400">Ngày tham gia</div>
+                  <div className="text-lg font-semibold text-slate-900 dark:text-white">
+                    {new Date(user.createdAt).toLocaleDateString('vi-VN')}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {features.map((feature, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + index * 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer"
+            >
+              <div className={`w-12 h-12 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center mb-4`}>
+                <feature.icon className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-lg font-bold text-slate-900 dark:text-white mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">
+                {feature.desc}
+              </p>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Info Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-6 md:p-8"
+        >
+          <h3 className="text-xl font-bold text-blue-900 dark:text-blue-300 mb-2">
+            Dashboard người dùng 📊
+          </h3>
+          <p className="text-blue-700 dark:text-blue-400">
+            Đây là trang dashboard dành cho người dùng thông thường. Bạn có thể xem thông tin cá nhân, theo dõi hoạt động và quản lý tài khoản của mình tại đây.
+          </p>
+        </motion.div>
+      </main>
     </div>
   );
 }
@@ -447,14 +593,14 @@ function SidebarItem({ icon: Icon, label, active, collapsed, onClick }: SidebarI
   return (
     <button
       onClick={onClick}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 text-left font-medium ${
+      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition-colors text-left ${
         active 
-          ? 'bg-gray-100 border-2 border-gray-300 text-gray-700 shadow-md' 
-          : 'text-gray-600 dark:text-slate-300 hover:bg-sky-50 hover:text-sky-600 transition-all duration-200'
-      } ${collapsed ? 'justify-center' : ''}`}
+          ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' 
+          : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700'
+      }`}
     >
       <Icon className="w-5 h-5 flex-shrink-0" />
-      {!collapsed && <span>{label}</span>}
+      {!collapsed && <span className="font-medium">{label}</span>}
     </button>
   );
 }
@@ -488,20 +634,20 @@ interface StatsCardProps {
 
 function StatsCard({ icon: Icon, value, label, color }: StatsCardProps) {
   const colorClasses = {
-    blue: 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400',
-    green: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400',
-    purple: 'bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400'
+    blue: 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
+    green: 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400',
+    purple: 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
   };
 
   return (
-    <div className="bg-white dark:bg-slate-900 backdrop-blur-sm p-6 rounded-xl border border-gray-200 dark:border-slate-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
+    <div className="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 hover:shadow-lg transition-shadow">
       <div className="flex items-center gap-4">
-        <div className={`p-3 rounded-xl ${colorClasses[color]}`}>
+        <div className={`p-3 rounded-lg ${colorClasses[color]}`}>
           <Icon className="w-6 h-6" />
         </div>
         <div>
-          <div className="text-2xl font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">{value}</div>
-          <div className="text-sm text-gray-500 dark:text-slate-400 font-medium">{label}</div>
+          <div className="text-2xl font-bold text-slate-900 dark:text-white">{value}</div>
+          <div className="text-sm text-slate-500 dark:text-slate-400">{label}</div>
         </div>
       </div>
     </div>
@@ -519,14 +665,14 @@ interface DashboardCardProps {
 
 function DashboardCard({ dashboard }: DashboardCardProps) {
   return (
-    <div className="bg-white p-5 rounded-2xl border border-gray-200 hover:bg-sky-50 hover:scale-105 hover:border-sky-200 transition-all duration-200 cursor-pointer group">
-      <div className="h-32 bg-gradient-to-br from-gray-50 to-gray-100 dark:bg-slate-800 rounded-xl mb-4 flex items-center justify-center group-hover:from-gray-100 group-hover:to-gray-200 group-hover:scale-105 dark:group-hover:bg-slate-700 transition-all duration-300">
-        <BarChart3 className="w-8 h-8 text-gray-600 dark:text-slate-400 group-hover:scale-125 group-hover:text-gray-700 transition-all duration-300" />
+    <div className="bg-white dark:bg-slate-800 p-4 rounded-lg border border-slate-200 dark:border-slate-700 hover:shadow-md transition-shadow cursor-pointer">
+      <div className="h-32 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg mb-3 flex items-center justify-center">
+        <BarChart3 className="w-8 h-8 text-blue-500" />
       </div>
-      <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-2 line-clamp-1 font-['Inter',system-ui,sans-serif] group-hover:text-gray-700 transition-colors duration-300">
+      <h3 className="font-semibold text-slate-900 dark:text-white text-sm mb-1 line-clamp-1">
         {dashboard.name}
       </h3>
-      <p className="text-xs text-gray-500 dark:text-slate-400 line-clamp-2 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">
+      <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2">
         {dashboard.description}
       </p>
     </div>
@@ -548,48 +694,48 @@ interface DashboardTableRowProps {
 
 function DashboardTableRow({ dashboard }: DashboardTableRowProps) {
   return (
-    <div className="p-5 hover:bg-sky-50 hover:scale-[1.01] transition-all duration-200 group rounded-xl mx-2 hover:border-sky-200 border border-transparent">
-      <div className="flex items-center gap-5">
-        <input type="checkbox" className="w-4 h-4 text-sky-600 rounded border-gray-300 transition-colors duration-200" />
-        <button className="p-1.5 hover:bg-sky-100 hover:scale-110 rounded-xl transition-all duration-200">
-          <Star className="w-4 h-4 text-gray-400 dark:text-slate-500 hover:text-yellow-400 transition-colors duration-300" />
+    <div className="p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+      <div className="flex items-center gap-4">
+        <input type="checkbox" className="w-4 h-4 text-blue-600" />
+        <button className="p-1 hover:bg-slate-200 dark:hover:bg-slate-600 rounded">
+          <Star className="w-4 h-4 text-slate-400" />
         </button>
         
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif] group-hover:text-gray-700 transition-colors duration-300">{dashboard.name}</h3>
+            <h3 className="font-semibold text-slate-900 dark:text-white">{dashboard.name}</h3>
           </div>
-          <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-1 font-medium mt-1 group-hover:text-gray-600 transition-colors duration-300">
+          <p className="text-sm text-slate-500 dark:text-slate-400 line-clamp-1">
             {dashboard.description}
           </p>
-          <div className="flex items-center gap-4 mt-2 text-xs text-gray-400 dark:text-slate-500 font-medium">
-            <span className="flex items-center gap-1.5">
+          <div className="flex items-center gap-4 mt-1 text-xs text-slate-400">
+            <span className="flex items-center gap-1">
               <User className="w-3 h-3" />
               {dashboard.author}
             </span>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1">
               <FolderOpen className="w-3 h-3" />
               {dashboard.category}
             </span>
-            <span className="flex items-center gap-1.5">
+            <span className="flex items-center gap-1">
               <Calendar className="w-3 h-3" />
               {dashboard.lastModified}
             </span>
           </div>
         </div>
 
-        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <button className="p-2.5 hover:bg-sky-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <ExternalLink className="w-4 h-4 text-gray-400 hover:text-sky-600 transition-colors duration-200" />
+        <div className="flex items-center gap-2">
+          <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg">
+            <ExternalLink className="w-4 h-4 text-slate-400" />
           </button>
-          <button className="p-2.5 hover:bg-emerald-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <Edit2 className="w-4 h-4 text-gray-400 hover:text-emerald-500 transition-colors duration-200" />
+          <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg">
+            <Edit2 className="w-4 h-4 text-slate-400" />
           </button>
-          <button className="p-2.5 hover:bg-violet-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <Share2 className="w-4 h-4 text-gray-400 hover:text-violet-500 transition-colors duration-200" />
+          <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg">
+            <Share2 className="w-4 h-4 text-slate-400" />
           </button>
-          <button className="p-2.5 hover:bg-sky-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <MoreVertical className="w-4 h-4 text-gray-400 hover:text-sky-600 transition-colors duration-200" />
+          <button className="p-2 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-lg">
+            <MoreVertical className="w-4 h-4 text-slate-400" />
           </button>
         </div>
       </div>
