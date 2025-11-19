@@ -383,32 +383,34 @@ export default function SettingsPage() {
   return (
     <div className="p-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex gap-8">
-          {/* Sidebar */}
-          <div className="w-64 space-y-2">
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                    activeTab === tab.id
-                      ? 'bg-blue-50 text-blue-600 border border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {tab.label}
-                </button>
-              );
-            })}
+        {/* Settings Navigation */}
+        <div className="bg-white rounded-2xl border border-gray-200 mb-6">
+          <div className="p-4">
+            <div className="flex flex-wrap gap-2">
+              {tabs.map((tab) => {
+                const Icon = tab.icon;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+                      activeTab === tab.id
+                        ? 'bg-blue-50 text-blue-600 border border-blue-200'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
+        </div>
 
-          {/* Content */}
-          <div className="flex-1">
-            {renderTabContent()}
-          </div>
+        {/* Content */}
+        <div>
+          {renderTabContent()}
         </div>
       </div>
     </div>
