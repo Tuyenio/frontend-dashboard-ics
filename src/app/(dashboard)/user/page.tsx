@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   LogOut, User, Mail, Shield, Calendar, Search, Bell, Settings,
   BarChart3, TrendingUp, Activity, CheckCircle, X, Menu, Home,
-  Database, FolderOpen, Star, Plus, ChevronLeft, ChevronRight,
+  Database, FolderOpen, Star, Plus, ChevronDown,
   HardDrive, PieChart, Users, MoreVertical, Edit2, ExternalLink,
   Share2, Filter
 } from 'lucide-react';
@@ -31,13 +31,7 @@ export default function UserDashboard() {
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-
-  // Mock data cho thống kê
-  const stats = {
-    dashboards: 5,
-    storage: '2.4 GB',
-    databases: 3
-  };
+  const [showCreateModal, setShowCreateModal] = useState(false);
 
   // Mock dashboards data
   const dashboards = [
@@ -88,56 +82,83 @@ export default function UserDashboard() {
     }
   ];
 
+  const sidebarItems = [
+    { icon: Home, label: 'Dashboards', active: true, href: '/dashboard/user' },
+    { icon: Database, label: 'Data Sources', active: false, href: '/dashboard/data-sources' },
+    { icon: Activity, label: 'Monitoring', active: false, href: '/dashboard/monitoring' },
+    { icon: Settings, label: 'Settings', active: false, href: '/dashboard/settings' }
+  ];
+
   useEffect(() => {
     // Kiểm tra nếu có thông báo đăng nhập thành công
     if (searchParams.get('loginSuccess') === 'true') {
       setShowSuccessMessage(true);
-      // Tự động ẩn thông báo sau 5 giây
       setTimeout(() => setShowSuccessMessage(false), 5000);
-      // Xóa query param khỏi URL
-      router.replace('/user');
+      router.replace('/dashboard/user');
     }
+    loadUserData();
   }, [searchParams, router]);
 
-  useEffect(() => {
-    const checkAuth = async () => {
+  const loadUserData = async () => {
+    try {
+      setIsLoading(true);
       const token = localStorage.getItem('access_token');
+      const storedUser = localStorage.getItem('user');
       
       if (!token) {
+        console.log('No access token found, redirecting to login');
         router.push('/login');
         return;
       }
 
-      try {
-        const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.AUTH.ME}`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const userData = await response.json();
+      // Nếu có user data trong localStorage, sử dụng luôn để tăng tốc độ loading
+      if (storedUser) {
+        try {
+          const userData = JSON.parse(storedUser);
           setUser(userData);
-          
-          // Redirect admin to admin panel
-          if (userData.role === 'admin') {
-            router.push('/admin');
-          }
-        } else {
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('user');
+        } catch (e) {
+          console.error('Error parsing stored user data:', e);
+        }
+      }
+
+      const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.AUTH.ME}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        const userData = result.data || result.user || result;
+        setUser(userData);
+        // Cập nhật user data trong localStorage
+        localStorage.setItem('user', JSON.stringify(userData));
+      } else if (response.status === 401) {
+        console.log('Token expired or invalid, redirecting to login');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('user');
+        router.push('/login');
+      } else {
+        console.error('Error loading user data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error loading user data:', error);
+      // Nếu có lỗi network và có user data trong localStorage, vẫn tiếp tục
+      const storedUser = localStorage.getItem('user');
+      if (storedUser && !user) {
+        try {
+          const userData = JSON.parse(storedUser);
+          setUser(userData);
+        } catch (e) {
+          console.error('Error parsing stored user data:', e);
           router.push('/login');
         }
-      } catch (error) {
-        console.error('Auth check error:', error);
-        router.push('/login');
-      } finally {
-        setIsLoading(false);
       }
-    };
-
-    checkAuth();
-  }, [router]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
@@ -145,252 +166,237 @@ export default function UserDashboard() {
     router.push('/login');
   };
 
-  if (isLoading) {
+  function SidebarItem({ icon: Icon, label, active, href }: { icon: any, label: string, active: boolean, href: string }) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-slate-600 dark:text-slate-400">Đang tải...</p>
+      <motion.a
+        href={href}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
+        className={`flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-medium transition-all duration-200 ${
+          active 
+            ? 'bg-gray-100 border-2 border-gray-300 text-gray-700 shadow-md' 
+            : 'text-gray-600 hover:bg-sky-50 hover:text-sky-600 transition-all duration-200'
+        }`}
+      >
+        <Icon className="w-5 h-5" />
+        {label}
+      </motion.a>
+    );
+  }
+
+  function DashboardCard({ dashboard }: { dashboard: typeof dashboards[0] }) {
+    return (
+      <div className="bg-white p-5 rounded-2xl border border-gray-200 hover:bg-sky-50 hover:scale-105 hover:border-sky-200 transition-all duration-200 cursor-pointer group">
+        <div className="flex items-start justify-between mb-4">
+          <BarChart3 className="w-8 h-8 text-gray-600 group-hover:scale-125 group-hover:text-gray-700 transition-all duration-300" />
+          <button className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <Star className="w-4 h-4 text-gray-400 hover:text-yellow-400" />
+          </button>
+        </div>
+        <h3 className="font-medium text-gray-800 text-sm mb-2 line-clamp-1 group-hover:text-gray-700 transition-colors duration-300">
+          {dashboard.name}
+        </h3>
+        <p className="text-xs text-gray-500 line-clamp-2 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">
+          {dashboard.description}
+        </p>
+        <div className="flex items-center justify-between mt-3 text-xs text-gray-400 font-medium">
+          <span>{dashboard.author}</span>
+          <span>{dashboard.lastModified}</span>
         </div>
       </div>
     );
   }
 
-  if (!user) return null;
+  function DashboardTableRow({ dashboard }: { dashboard: typeof dashboards[0] }) {
+    return (
+      <div className="p-5 hover:bg-sky-50 hover:scale-[1.01] transition-all duration-200 group rounded-xl mx-2 hover:border-sky-200 border border-transparent">
+        <div className="flex items-center gap-5">
+          <input type="checkbox" className="w-4 h-4 text-sky-600 rounded border-gray-300 transition-colors duration-200" />
+          <button className="p-1.5 hover:bg-sky-100 hover:scale-110 rounded-xl transition-all duration-200">
+            <Star className="w-4 h-4 text-gray-400 hover:text-yellow-400 transition-colors duration-300" />
+          </button>
+          
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <h3 className="font-medium text-gray-800 group-hover:text-gray-700 transition-colors duration-300 text-sm">{dashboard.name}</h3>
+            </div>
+            <p className="text-sm text-gray-500 line-clamp-1 font-medium mt-1 group-hover:text-gray-600 transition-colors duration-300">
+              {dashboard.description}
+            </p>
+            <div className="flex items-center gap-4 mt-2 text-xs text-gray-400 font-medium">
+              <span className="flex items-center gap-1.5">
+                <User className="w-3 h-3" />
+                {dashboard.author}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <FolderOpen className="w-3 h-3" />
+                {dashboard.category}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Calendar className="w-3 h-3" />
+                {dashboard.lastModified}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+            <button className="p-2.5 hover:bg-sky-50 hover:scale-105 rounded-xl transition-all duration-200">
+              <ExternalLink className="w-4 h-4 text-gray-400 hover:text-sky-600 transition-colors duration-200" />
+            </button>
+            <button className="p-2.5 hover:bg-emerald-50 hover:scale-105 rounded-xl transition-all duration-200">
+              <Edit2 className="w-4 h-4 text-gray-400 hover:text-emerald-500 transition-colors duration-200" />
+            </button>
+            <button className="p-2.5 hover:bg-violet-50 hover:scale-105 rounded-xl transition-all duration-200">
+              <Share2 className="w-4 h-4 text-gray-400 hover:text-violet-500 transition-colors duration-200" />
+            </button>
+            <button className="p-2.5 hover:bg-sky-50 hover:scale-105 rounded-xl transition-all duration-200">
+              <MoreVertical className="w-4 h-4 text-gray-400 hover:text-sky-600 transition-colors duration-200" />
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex font-['Inter',system-ui,sans-serif]">
-      {/* Sidebar */}
-      <motion.div
-        initial={{ width: sidebarCollapsed ? 80 : 280 }}
-        animate={{ width: sidebarCollapsed ? 80 : 280 }}
-        transition={{ duration: 0.3 }}
-        className="bg-white dark:bg-slate-900 backdrop-blur-lg border-r border-gray-100 dark:border-slate-800 flex flex-col shadow-sm"
-      >
-        {/* Logo & Toggle */}
-        <div className="p-6 flex items-center justify-between border-b border-gray-100 dark:border-slate-800">
-          {!sidebarCollapsed && (
-            <div className="flex flex-col items-center gap-3 w-full">
-              <div className="relative w-16 h-16">
-                <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
-              </div>
-              <div className="text-center">
-                <h1 className="font-bold text-xl text-gray-900 dark:text-white">ICS</h1>
-                <p className="text-sm text-gray-500 dark:text-slate-400 font-medium">Dashboard</p>
-              </div>
-            </div>
-          )}
-          {sidebarCollapsed && (
-            <div className="relative w-8 h-8 mx-auto">
-              <Image src="/logoics.png" alt="ICS Logo" fill className="object-contain" />
-            </div>
-          )}
-          <button
-            onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-2.5 rounded-xl hover:bg-gray-100 hover:scale-110 dark:hover:bg-slate-800 transition-all duration-300 absolute top-4 right-4"
-          >
-            {sidebarCollapsed ? (
-              <ChevronRight className="w-4 h-4 text-gray-600 dark:text-slate-300" />
-            ) : (
-              <ChevronLeft className="w-4 h-4 text-gray-600 dark:text-slate-300" />
-            )}
-          </button>
-        </div>
-
-        {/* Create New Dashboard Button */}
-        <div className="p-4">
-          <button className={`w-full flex items-center gap-3 px-4 py-3.5 bg-gradient-to-r from-sky-400 to-cyan-500 dark:from-sky-500 dark:to-cyan-600 text-white rounded-2xl hover:from-sky-500 hover:to-cyan-600 dark:hover:from-sky-400 dark:hover:to-cyan-500 hover:shadow-lg hover:shadow-sky-500/25 transform hover:scale-105 transition-all duration-300 font-semibold ${sidebarCollapsed ? 'justify-center' : ''}`}>
-            <Plus className="w-5 h-5" />
-            {!sidebarCollapsed && <span>Tạo Dashboard Mới</span>}
-          </button>
-        </div>
-
-        {/* Navigation */}
-        <nav className="flex-1 p-4">
-          <div className="space-y-1">
-            <SidebarItem icon={Home} label="Dashboards" active collapsed={sidebarCollapsed} />
-            <SidebarItem icon={FolderOpen} label="Data Sources" collapsed={sidebarCollapsed} />
-            <SidebarItem icon={Star} label="Starred" collapsed={sidebarCollapsed} />
-            <SidebarItem icon={Database} label="Data Hub" collapsed={sidebarCollapsed} />
-            <SidebarItem icon={Activity} label="Monitoring" collapsed={sidebarCollapsed} />
-          </div>
-        </nav>
-
-        {/* User Info */}
-        <div className="p-4 border-t border-gray-100 dark:border-slate-800">
-          {!sidebarCollapsed && (
-            <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-slate-300 font-medium">
-              <User className="w-4 h-4" />
-              <span>Signed in as {user.role}</span>
-            </div>
-          )}
-          {sidebarCollapsed && (
-            <div className="flex justify-center">
-              <User className="w-5 h-5 text-gray-600 dark:text-slate-300" />
-            </div>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col">
-        {/* Header */}
-        <header className="bg-white dark:bg-slate-900 backdrop-blur-lg border-b border-gray-100 dark:border-slate-800 px-6 py-5 shadow-sm">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">All Dashboards (5 dashboards)</h1>
-            </div>
-            
-            {/* Header Actions */}
-            <div className="flex items-center gap-4">
-              {/* Search */}
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="text"
-                  placeholder="Search dashboards"
-                  className="pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-slate-800 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white w-72 font-medium transition-all duration-200"
-                />
-              </div>
-
-              {/* Quick Actions */}
-              <button className="px-4 py-2.5 bg-gradient-to-r from-sky-400 to-cyan-500 text-white rounded-2xl text-sm font-semibold hover:from-sky-500 hover:to-cyan-600 hover:shadow-lg hover:shadow-sky-500/25 hover:scale-105 transition-all duration-300">
-                Free Tier
-              </button>
-              <button className="px-4 py-2.5 border border-gray-200 text-gray-600 bg-white rounded-2xl text-sm font-medium hover:bg-sky-50 hover:border-sky-200 hover:text-sky-600 hover:scale-105 transition-all duration-200">
-                Quick Tour
-              </button>
-
-              {/* Notifications */}
-              <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative">
-                <Bell className="w-5 h-5 text-slate-600 dark:text-slate-300" />
-              </button>
-
-              {/* User Avatar & Menu */}
-              <div className="relative">
-                <button
-                  onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                >
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
-                    {user.fullName?.charAt(0) || 'U'}
-                  </div>
-                  <span className="text-sm font-medium text-slate-700 dark:text-slate-200">
-                    {user.fullName || 'User'}
-                  </span>
-                </button>
-
-                {/* User Dropdown Menu */}
-                <AnimatePresence>
-                  {showUserMenu && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      className="absolute right-0 top-full mt-2 w-64 bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 py-2 z-50"
-                    >
-                      <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-700">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
-                            {user.fullName?.charAt(0) || 'U'}
-                          </div>
-                          <div>
-                            <p className="font-semibold text-slate-900 dark:text-white">{user.fullName}</p>
-                            <p className="text-sm text-slate-500">{user.email}</p>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="py-2">
-                        <UserMenuItem icon={User} label="Thông tin cá nhân" />
-                        <UserMenuItem icon={Settings} label="Cài đặt" />
-                        <UserMenuItem icon={Shield} label="Bảo mật" />
-                        <div className="border-t border-slate-200 dark:border-slate-700 my-2"></div>
-                        <button
-                          onClick={handleLogout}
-                          className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
-                        >
-                          <LogOut className="w-4 h-4" />
-                          Đăng xuất
-                        </button>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
-        </header>
-
-        {/* Success Message */}
+    <div className="min-h-screen bg-gray-50 font-['Inter',system-ui,sans-serif]">
+      {/* Success Message */}
+      <AnimatePresence>
         {showSuccessMessage && (
           <motion.div
-            initial={{ opacity: 0, y: -50 }}
+            initial={{ opacity: 0, y: -100 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="mx-6 mt-4"
+            exit={{ opacity: 0, y: -100 }}
+            className="fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
           >
-            <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-4 flex items-center gap-3">
-              <CheckCircle className="w-6 h-6 text-green-600 dark:text-green-400 flex-shrink-0" />
-              <div className="flex-1">
-                <h3 className="font-semibold text-green-800 dark:text-green-300">
-                  Đăng nhập thành công!
-                </h3>
-                <p className="text-green-700 dark:text-green-400 text-sm">
-                  Chào mừng bạn đến với dashboard. Bạn đã đăng nhập thành công.
-                </p>
-              </div>
-              <button
-                onClick={() => setShowSuccessMessage(false)}
-                className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5" />
+              <span>Đăng nhập thành công!</span>
             </div>
           </motion.div>
         )}
+      </AnimatePresence>
 
-        {/* Stats Cards */}
-        <div className="p-6">
-          <div className="grid grid-cols-3 gap-6 mb-6">
-            <StatsCard 
-              icon={BarChart3}
-              value={stats.dashboards}
-              label="Dashboards"
-              color="blue"
-            />
-            <StatsCard 
-              icon={HardDrive}
-              value={stats.storage}
-              label="Storage Used"
-              color="green"
-            />
-            <StatsCard 
-              icon={Database}
-              value={stats.databases}
-              label="Databases"
-              color="purple"
-            />
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-40">
+        <div className="flex items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-medium text-gray-800">All Dashboards (5 dashboards)</h1>
           </div>
 
-          {/* Recent Section */}
-          <div className="mb-8">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-xl font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">Recent</h2>
-              <button className="text-sm text-gray-600 dark:text-slate-400 hover:text-gray-900 dark:hover:text-white font-semibold transition-colors">
-                View All
-              </button>
+          <div className="flex items-center gap-4">
+            {/* Free Tier Badge */}
+            <div className="bg-gradient-to-r from-cyan-500 to-blue-600 text-white px-4 py-2 rounded-2xl text-sm font-semibold shadow-lg">
+              Free Tier
             </div>
             
-            {/* Dashboard Cards Grid with Create New Card */}
+            <button className="px-4 py-2.5 border border-gray-200 text-gray-600 bg-white rounded-2xl text-sm font-medium hover:bg-sky-50 hover:border-sky-200 hover:text-sky-600 hover:scale-105 transition-all duration-200">
+              Quick Tour
+            </button>
+
+            <button className="p-2 rounded-lg hover:bg-slate-100 transition-colors relative">
+              <Bell className="w-5 h-5 text-gray-600" />
+              <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></span>
+            </button>
+
+            {/* User Menu */}
+            <div className="relative">
+              <button 
+                onClick={() => setShowUserMenu(!showUserMenu)}
+                className="flex items-center gap-2 p-2 rounded-lg hover:bg-slate-100 transition-colors"
+              >
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold text-sm">
+                  {user?.fullName?.charAt(0) || 'U'}
+                </div>
+                <span className="text-sm font-medium text-gray-700">User</span>
+                <ChevronDown className="w-4 h-4 text-gray-500" />
+              </button>
+              
+              {/* User Dropdown Menu */}
+              <AnimatePresence>
+                {showUserMenu && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    className="absolute right-0 top-full mt-2 w-64 bg-white rounded-xl shadow-lg border border-slate-200 py-2 z-50"
+                  >
+                    <div className="px-4 py-3 border-b border-slate-200">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
+                          {user?.fullName?.charAt(0) || 'U'}
+                        </div>
+                        <div>
+                          <p className="font-medium text-gray-900">{user?.fullName}</p>
+                          <p className="text-sm text-gray-500">{user?.email}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="py-2">
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors">
+                        <Settings className="w-4 h-4" />
+                        Settings
+                      </button>
+                      <button className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 hover:bg-slate-100 transition-colors">
+                        <HardDrive className="w-4 h-4" />
+                        Help & Support
+                      </button>
+                    </div>
+                    
+                    <div className="border-t border-slate-200 pt-2">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign out
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
+          <div className="p-6">
+            <nav className="space-y-2">
+              {sidebarItems.map((item, index) => (
+                <SidebarItem key={index} {...item} />
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Content */}
+        <main className="flex-1 p-6">
+          <div className="max-w-7xl mx-auto space-y-8">
+            {/* Dashboard Cards Grid */}
             <div className="grid grid-cols-6 gap-5">
               {/* Create New Dashboard Card */}
-              <div className="bg-white p-6 rounded-2xl border-2 border-dashed border-gray-200 hover:border-sky-300 hover:bg-sky-50 hover:scale-105 transition-all duration-200 cursor-pointer group">
-                <div className="h-32 flex flex-col items-center justify-center text-gray-500 dark:text-slate-500 group-hover:text-sky-600 dark:group-hover:text-slate-300 transition-colors duration-200">
-                  <div className="w-14 h-14 rounded-full bg-gray-100 dark:bg-slate-800 group-hover:bg-sky-100 group-hover:scale-110 dark:group-hover:bg-slate-700 flex items-center justify-center mb-3 transition-all duration-200">
+              <div 
+                onClick={() => setShowCreateModal(true)}
+                className="bg-white p-6 rounded-2xl border-2 border-dashed border-gray-200 hover:border-sky-300 hover:bg-sky-50 hover:scale-105 transition-all duration-200 cursor-pointer group"
+              >
+                <div className="h-32 flex flex-col items-center justify-center text-gray-500 group-hover:text-sky-600 transition-colors duration-200">
+                  <div className="w-14 h-14 rounded-full bg-gray-100 group-hover:bg-sky-100 group-hover:scale-110 flex items-center justify-center mb-3 transition-all duration-200">
                     <Plus className="w-7 h-7 text-gray-500 group-hover:text-sky-600 transition-colors duration-200" />
                   </div>
-                  <span className="text-sm font-semibold">Tạo mới</span>
+                  <span className="text-sm font-medium">Tạo mới</span>
                 </div>
               </div>
               
@@ -399,200 +405,148 @@ export default function UserDashboard() {
                 <DashboardCard key={dashboard.id} dashboard={dashboard} />
               ))}
             </div>
-          </div>
 
-          {/* All Dashboards Table */}
-          <div className="bg-white dark:bg-slate-900 backdrop-blur-sm rounded-xl border border-gray-200 dark:border-slate-800 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-gray-200 dark:border-slate-800">
-              <div className="flex items-center justify-between">
-                <h3 className="text-lg font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">All Dashboards</h3>
-                <div className="flex items-center gap-4">
-                  <select className="px-4 py-2.5 bg-gray-50 dark:bg-slate-800 backdrop-blur-sm border border-gray-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white font-medium text-gray-900 dark:text-white">
-                    <option>Modified - Descending</option>
-                    <option>Name - Ascending</option>
-                    <option>Created - Descending</option>
-                  </select>
-                  <button className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 bg-white text-gray-600 rounded-2xl text-sm hover:bg-sky-50 hover:border-sky-200 hover:text-sky-600 hover:scale-105 transition-all duration-200 font-medium">
-                    <Filter className="w-4 h-4" />
-                    All
-                  </button>
-                  <span className="text-sm text-gray-500 dark:text-slate-400 font-medium">1 - 5 of 5</span>
+            {/* All Dashboards Table */}
+            <div className="bg-white rounded-2xl border border-gray-200">
+              <div className="p-6 border-b border-gray-200">
+                <h3 className="text-lg font-medium text-gray-800">All Dashboards</h3>
+              </div>
+              
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="relative">
+                      <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" />
+                      <input
+                        type="text"
+                        placeholder="Search dashboards..."
+                        className="pl-10 pr-4 py-2.5 w-80 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                      />
+                    </div>
+                    
+                    <select className="px-3 py-2.5 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-500">
+                      <option>Created - Descending</option>
+                    </select>
+                    
+                    <button className="flex items-center gap-2 px-4 py-2.5 border border-gray-200 bg-white text-gray-600 rounded-2xl text-sm hover:bg-sky-50 hover:border-sky-200 hover:text-sky-600 hover:scale-105 transition-all duration-200 font-medium">
+                      <Filter className="w-4 h-4" />
+                      All
+                    </button>
+                  </div>
+                  
+                  <span className="text-sm text-gray-500 font-medium">1 - 5 of 5</span>
+                </div>
+
+                <div className="space-y-2">
+                  {dashboards.map((dashboard) => (
+                    <DashboardTableRow key={dashboard.id} dashboard={dashboard} />
+                  ))}
                 </div>
               </div>
             </div>
-
-            {/* Table Content */}
-            <div className="divide-y divide-gray-200 dark:divide-slate-800">
-              {dashboards.map((dashboard) => (
-                <DashboardTableRow key={dashboard.id} dashboard={dashboard} />
-              ))}
-            </div>
           </div>
-        </div>
+        </main>
       </div>
-    </div>
-  );
-}
 
-// Sidebar Item Component
-interface SidebarItemProps {
-  icon: any;
-  label: string;
-  active?: boolean;
-  collapsed: boolean;
-  onClick?: () => void;
-}
+      {/* Create Dashboard Modal */}
+      <AnimatePresence>
+        {showCreateModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowCreateModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white rounded-2xl shadow-2xl max-w-md w-full max-h-[80vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-lg font-medium text-gray-900">Create Dashboard</h2>
+                  <button
+                    onClick={() => setShowCreateModal(false)}
+                    className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-gray-500" />
+                  </button>
+                </div>
 
-function SidebarItem({ icon: Icon, label, active, collapsed, onClick }: SidebarItemProps) {
-  return (
-    <button
-      onClick={onClick}
-      className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-300 text-left font-medium ${
-        active 
-          ? 'bg-gray-100 border-2 border-gray-300 text-gray-700 shadow-md' 
-          : 'text-gray-600 dark:text-slate-300 hover:bg-sky-50 hover:text-sky-600 transition-all duration-200'
-      } ${collapsed ? 'justify-center' : ''}`}
-    >
-      <Icon className="w-5 h-5 flex-shrink-0" />
-      {!collapsed && <span>{label}</span>}
-    </button>
-  );
-}
+                <div className="space-y-4">
+                  {/* Start from Scratch */}
+                  <div 
+                    onClick={() => router.push('/dashboard/create')}
+                    className="flex items-center gap-4 p-4 border border-gray-200 rounded-xl hover:bg-sky-50 hover:border-sky-300 cursor-pointer transition-all duration-200 group"
+                  >
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100">
+                      <div className="w-8 h-8 bg-white rounded border-2 border-dashed border-blue-300 flex items-center justify-center">
+                        <div className="w-2 h-2 bg-blue-500 rounded-sm"></div>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 mb-1">Start from Scratch</h3>
+                      <p className="text-sm text-gray-600">Create a dashboard from scratch</p>
+                    </div>
+                  </div>
 
-// User Menu Item Component
-interface UserMenuItemProps {
-  icon: any;
-  label: string;
-  onClick?: () => void;
-}
+                  {/* Multi-Tabbed Dashboard */}
+                  <div className="flex items-center gap-4 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-all duration-200 group">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100">
+                      <div className="flex gap-1">
+                        <div className="w-3 h-4 bg-blue-500 rounded-sm"></div>
+                        <div className="w-3 h-4 bg-blue-300 rounded-sm"></div>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 mb-1">Multi-Tabbed Dashboard</h3>
+                      <p className="text-sm text-gray-600">Create a multi-tabbed dashboard by adding two or more dashboards</p>
+                    </div>
+                  </div>
 
-function UserMenuItem({ icon: Icon, label, onClick }: UserMenuItemProps) {
-  return (
-    <button
-      onClick={onClick}
-      className="w-full flex items-center gap-3 px-4 py-2 text-sm text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-    >
-      <Icon className="w-4 h-4" />
-      {label}
-    </button>
-  );
-}
+                  {/* Data Sources - Highlighted */}
+                  <div className="flex items-center gap-4 p-4 border-2 border-blue-200 bg-blue-50 rounded-xl cursor-pointer transition-all duration-200 group">
+                    <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center group-hover:bg-blue-200">
+                      <Database className="w-6 h-6 text-blue-600" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 mb-1">Data Sources</h3>
+                      <p className="text-sm text-gray-600">Import your data from popular connectors</p>
+                    </div>
+                  </div>
 
-// Stats Card Component
-interface StatsCardProps {
-  icon: any;
-  value: string | number;
-  label: string;
-  color: 'blue' | 'green' | 'purple';
-}
+                  {/* Slideshow */}
+                  <div className="flex items-center gap-4 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-all duration-200 group">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100">
+                      <div className="w-8 h-6 bg-gradient-to-r from-blue-500 to-blue-300 rounded-sm flex items-center justify-center">
+                        <div className="w-1 h-1 bg-white rounded-full"></div>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 mb-1">Slideshow</h3>
+                      <p className="text-sm text-gray-600">Create slideshow</p>
+                    </div>
+                  </div>
 
-function StatsCard({ icon: Icon, value, label, color }: StatsCardProps) {
-  const colorClasses = {
-    blue: 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400',
-    green: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400',
-    purple: 'bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400'
-  };
-
-  return (
-    <div className="bg-white dark:bg-slate-900 backdrop-blur-sm p-6 rounded-xl border border-gray-200 dark:border-slate-800 hover:shadow-lg hover:scale-[1.02] transition-all duration-300">
-      <div className="flex items-center gap-4">
-        <div className={`p-3 rounded-xl ${colorClasses[color]}`}>
-          <Icon className="w-6 h-6" />
-        </div>
-        <div>
-          <div className="text-2xl font-bold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif]">{value}</div>
-          <div className="text-sm text-gray-500 dark:text-slate-400 font-medium">{label}</div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// Dashboard Card Component
-interface DashboardCardProps {
-  dashboard: {
-    id: number;
-    name: string;
-    description: string;
-  };
-}
-
-function DashboardCard({ dashboard }: DashboardCardProps) {
-  return (
-    <div className="bg-white p-5 rounded-2xl border border-gray-200 hover:bg-sky-50 hover:scale-105 hover:border-sky-200 transition-all duration-200 cursor-pointer group">
-      <div className="h-32 bg-gradient-to-br from-gray-50 to-gray-100 dark:bg-slate-800 rounded-xl mb-4 flex items-center justify-center group-hover:from-gray-100 group-hover:to-gray-200 group-hover:scale-105 dark:group-hover:bg-slate-700 transition-all duration-300">
-        <BarChart3 className="w-8 h-8 text-gray-600 dark:text-slate-400 group-hover:scale-125 group-hover:text-gray-700 transition-all duration-300" />
-      </div>
-      <h3 className="font-semibold text-gray-900 dark:text-white text-sm mb-2 line-clamp-1 font-['Inter',system-ui,sans-serif] group-hover:text-gray-700 transition-colors duration-300">
-        {dashboard.name}
-      </h3>
-      <p className="text-xs text-gray-500 dark:text-slate-400 line-clamp-2 font-medium leading-relaxed group-hover:text-gray-600 transition-colors duration-300">
-        {dashboard.description}
-      </p>
-    </div>
-  );
-}
-
-// Dashboard Table Row Component
-interface DashboardTableRowProps {
-  dashboard: {
-    id: number;
-    name: string;
-    description: string;
-    author: string;
-    category: string;
-    lastModified: string;
-    starred: boolean;
-  };
-}
-
-function DashboardTableRow({ dashboard }: DashboardTableRowProps) {
-  return (
-    <div className="p-5 hover:bg-sky-50 hover:scale-[1.01] transition-all duration-200 group rounded-xl mx-2 hover:border-sky-200 border border-transparent">
-      <div className="flex items-center gap-5">
-        <input type="checkbox" className="w-4 h-4 text-sky-600 rounded border-gray-300 transition-colors duration-200" />
-        <button className="p-1.5 hover:bg-sky-100 hover:scale-110 rounded-xl transition-all duration-200">
-          <Star className="w-4 h-4 text-gray-400 dark:text-slate-500 hover:text-yellow-400 transition-colors duration-300" />
-        </button>
-        
-        <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-gray-900 dark:text-white font-['Inter',system-ui,sans-serif] group-hover:text-gray-700 transition-colors duration-300">{dashboard.name}</h3>
-          </div>
-          <p className="text-sm text-gray-500 dark:text-slate-400 line-clamp-1 font-medium mt-1 group-hover:text-gray-600 transition-colors duration-300">
-            {dashboard.description}
-          </p>
-          <div className="flex items-center gap-4 mt-2 text-xs text-gray-400 dark:text-slate-500 font-medium">
-            <span className="flex items-center gap-1.5">
-              <User className="w-3 h-3" />
-              {dashboard.author}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <FolderOpen className="w-3 h-3" />
-              {dashboard.category}
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Calendar className="w-3 h-3" />
-              {dashboard.lastModified}
-            </span>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-          <button className="p-2.5 hover:bg-sky-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <ExternalLink className="w-4 h-4 text-gray-400 hover:text-sky-600 transition-colors duration-200" />
-          </button>
-          <button className="p-2.5 hover:bg-emerald-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <Edit2 className="w-4 h-4 text-gray-400 hover:text-emerald-500 transition-colors duration-200" />
-          </button>
-          <button className="p-2.5 hover:bg-violet-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <Share2 className="w-4 h-4 text-gray-400 hover:text-violet-500 transition-colors duration-200" />
-          </button>
-          <button className="p-2.5 hover:bg-sky-50 hover:scale-105 rounded-xl transition-all duration-200">
-            <MoreVertical className="w-4 h-4 text-gray-400 hover:text-sky-600 transition-colors duration-200" />
-          </button>
-        </div>
-      </div>
+                  {/* Schedule */}
+                  <div className="flex items-center gap-4 p-4 border border-gray-200 rounded-xl hover:bg-gray-50 cursor-pointer transition-all duration-200 group">
+                    <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center group-hover:bg-blue-100">
+                      <Calendar className="w-6 h-6 text-blue-500" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-medium text-gray-900 mb-1">Schedule</h3>
+                      <p className="text-sm text-gray-600">Monitor your data to spot emerging trends</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

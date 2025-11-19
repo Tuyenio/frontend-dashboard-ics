@@ -58,9 +58,9 @@ export default function LoginPage() {
         
         // Redirect based on role
         if (data.user.role === 'admin') {
-          router.push('/admin');
+          router.push('/dashboard/admin?loginSuccess=true');
         } else {
-          router.push('/user');
+          router.push('/dashboard/user?loginSuccess=true');
         }
       } else {
         setError(data.message || t('auth.login.errors.invalidCredentials'));
